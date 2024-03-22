@@ -1,0 +1,2 @@
+"# DCGameJam2024"  initgit add README.mdgit commit -m "first commit"git branch -M maingit remote add origin https://github.com/JaMcConkey/DCGameJam2024.gitgit push -u origin main
+"# DCGameJam2024"  initgit add README.mdgit commit -m "first commit"git branch -M maingit remote add origin https://github.com/JaMcConkey/DCGameJam2024.gitgit push -u origin main

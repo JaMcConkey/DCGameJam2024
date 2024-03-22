@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CellData" load_steps=6 format=3 uid="uid://ddndxnwibngx3"]
+
+[ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="1_byv7t"]
+[ext_resource type="Script" path="res://WorldStuff/Cells/CellData.gd" id="1_ipq8a"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwcnq"]
+albedo_texture = ExtResource("1_byv7t")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0cm1j"]
+albedo_texture = ExtResource("1_byv7t")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v4vy3"]
+albedo_texture = ExtResource("1_byv7t")
+
+[resource]
+script = ExtResource("1_ipq8a")
+ground = SubResource("StandardMaterial3D_lwcnq")
+walls = SubResource("StandardMaterial3D_v4vy3")
+roof = SubResource("StandardMaterial3D_0cm1j")
+hide_roof = false

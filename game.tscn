@@ -1,0 +1,256 @@
+[gd_scene load_steps=9 format=3 uid="uid://bqxxuvy4xijdd"]
+
+[ext_resource type="PackedScene" uid="uid://bsf842ogqigq6" path="res://WorldStuff/world.tscn" id="1_bmo7q"]
+[ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="1_ja61c"]
+[ext_resource type="PackedScene" uid="uid://lmo2htf7heq1" path="res://WorldStuff/map.tscn" id="2_f3upd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xru2"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gna6j"]
+bg_color = Color(0.779982, 0, 0.195866, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eh86f"]
+bg_color = Color(0, 0.718545, 0.359683, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_24ta0"]
+bg_color = Color(0.593255, 0.51, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kl5mq"]
+bg_color = Color(1, 1, 0, 1)
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GamePanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1xru2")
+
+[node name="Character" type="Panel" parent="."]
+custom_minimum_size = Vector2(462, 1080)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -462.0
+offset_bottom = 1080.0
+grow_horizontal = 0
+
+[node name="MAYBE NOT USED" type="HBoxContainer" parent="Character"]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Labels" type="VBoxContainer" parent="Character/MAYBE NOT USED"]
+custom_minimum_size = Vector2(60, 32)
+layout_mode = 2
+
+[node name="NameLabel" type="RichTextLabel" parent="Character/MAYBE NOT USED/Labels"]
+layout_mode = 2
+text = "Name:"
+fit_content = true
+
+[node name="ClassLabel" type="RichTextLabel" parent="Character/MAYBE NOT USED/Labels"]
+layout_mode = 2
+text = "Class:
+"
+fit_content = true
+
+[node name="LevelLabel" type="RichTextLabel" parent="Character/MAYBE NOT USED/Labels"]
+layout_mode = 2
+text = "Level:
+"
+fit_content = true
+
+[node name="Values" type="VBoxContainer" parent="Character/MAYBE NOT USED"]
+custom_minimum_size = Vector2(200, 32)
+layout_mode = 2
+
+[node name="NameValue" type="RichTextLabel" parent="Character/MAYBE NOT USED/Values"]
+layout_mode = 2
+text = "James"
+fit_content = true
+
+[node name="ClassValue" type="RichTextLabel" parent="Character/MAYBE NOT USED/Values"]
+layout_mode = 2
+text = "Paladin"
+fit_content = true
+
+[node name="LevelValue" type="RichTextLabel" parent="Character/MAYBE NOT USED/Values"]
+layout_mode = 2
+text = "5"
+fit_content = true
+
+[node name="Portrait" type="TextureRect" parent="Character"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_top = 43.0
+offset_right = 64.0
+offset_bottom = 171.0
+grow_horizontal = 2
+texture = ExtResource("1_ja61c")
+
+[node name="CharacterInfo" type="RichTextLabel" parent="Character"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -59.0
+offset_right = 61.0
+offset_bottom = 69.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[center]James
+Paladin - 5[/center]"
+fit_content = true
+
+[node name="Health" type="RichTextLabel" parent="Character"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 192.0
+offset_bottom = 192.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[center]Health[/center]"
+fit_content = true
+
+[node name="HealthBar" type="ProgressBar" parent="Character"]
+custom_minimum_size = Vector2(150, 26)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -322.0
+offset_right = 75.0
+offset_bottom = -295.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_gna6j")
+theme_override_styles/fill = SubResource("StyleBoxFlat_eh86f")
+value = 50.0
+
+[node name="Sanity" type="RichTextLabel" parent="Character"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 246.0
+offset_bottom = 269.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[center]Sanity[/center]"
+fit_content = true
+
+[node name="SanityBar" type="ProgressBar" parent="Character"]
+custom_minimum_size = Vector2(150, 26)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -269.0
+offset_right = 75.0
+offset_bottom = -242.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_24ta0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_kl5mq")
+value = 50.0
+
+[node name="Stats" type="Panel" parent="Character"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -219.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Character/Stats"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "Stats stuff going here
+STR: 55555
+DEX:4444
+INT: 333
+
+
+[center] ACTION POOL [/center]
+OFFENSIVE : OOX
+DEFENSIVE: OO
+ADAPTRIVE: X
+X = Spent O = Available"
+
+[node name="Actions" type="Panel" parent="Character"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -415.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Character/Actions"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -236.5
+offset_bottom = -213.5
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]Actions[/center]
+"
+fit_content = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -464.0
+offset_bottom = -277.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1456, 803)
+render_target_update_mode = 4
+
+[node name="World" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("map") instance=ExtResource("1_bmo7q")]
+map = NodePath("../../../Map")
+
+[node name="Map" parent="." instance=ExtResource("2_f3upd")]
+visible = false

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsf842ogqigq6"]
+
+[ext_resource type="Script" path="res://WorldStuff/World.gd" id="1_gyp5w"]
+[ext_resource type="Resource" uid="uid://ddndxnwibngx3" path="res://WorldStuff/Cells/BasicCellData.tres" id="2_i4rgu"]
+[ext_resource type="Script" path="res://PlayerStuff/PlayerPawn.gd" id="2_nnqdp"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0gwhq"]
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_gyp5w")
+test_cell_data = ExtResource("2_i4rgu")
+
+[node name="PlayerPawn" type="Camera3D" parent="." node_paths=PackedStringArray("raycast")]
+script = ExtResource("2_nnqdp")
+raycast = NodePath("RayCast3D")
+
+[node name="PlayerHitBox" type="Area3D" parent="PlayerPawn"]
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerPawn/PlayerHitBox"]
+shape = SubResource("SphereShape3D_0gwhq")
+
+[node name="RayCast3D" type="RayCast3D" parent="PlayerPawn"]
+target_position = Vector3(0, 0, -1)
+collide_with_areas = true
+collide_with_bodies = false
