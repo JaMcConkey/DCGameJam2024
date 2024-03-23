@@ -13,6 +13,9 @@ var can_rotate : bool = true
 
 @export var raycast : RayCast3D
 
+func toggle_move_and_rotate(toggle : bool):
+	can_move = toggle
+	can_rotate = toggle
 
 func _input(event):
 	if can_rotate:
@@ -23,12 +26,8 @@ func _input(event):
 	if can_move:
 		if event.is_action_pressed("Forward"):
 			if raycast.is_colliding():
-				print("RAY CAST IS COLLIDING")
 				move_forward()
 				return
-			else:
-				print("RAY NO COLLIDER")
-
 func move_forward():
 	if moving:
 		return
@@ -60,6 +59,9 @@ func tween_rotation(degrees):
 	await tween.finished
 	moving = false
 
+func emit_cell_entered(cell : Cell):
+	entered_new_cell.emit(cell)
 
 func _on_player_hit_box_area_entered(area):
-	entered_new_cell.emit(area)
+	if area is Cell:
+		emit_cell_entered(area)

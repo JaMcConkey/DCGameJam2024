@@ -3,16 +3,22 @@
 [ext_resource type="Script" path="res://WorldStuff/Cells/Cell.gd" id="1_esaly"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_xymg6"]
+resource_local_to_scene = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_ru5hw"]
+resource_local_to_scene = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_ncl3m"]
+resource_local_to_scene = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_a02bm"]
+resource_local_to_scene = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_pmqu3"]
+resource_local_to_scene = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_7fevh"]
+resource_local_to_scene = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t6c07"]
 size = Vector3(0.5, 0.5, 0.5)
@@ -51,3 +57,7 @@ skeleton = NodePath("../Roof")
 
 [node name="CellHitBox" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_t6c07")
+
+[node name="EventVisual" type="Sprite3D" parent="."]
+pixel_size = 0.0001
+billboard = 2

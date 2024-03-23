@@ -1,11 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqxxuvy4xijdd"]
+[gd_scene load_steps=17 format=3 uid="uid://bqxxuvy4xijdd"]
 
 [ext_resource type="PackedScene" uid="uid://bsf842ogqigq6" path="res://WorldStuff/world.tscn" id="1_bmo7q"]
 [ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="1_ja61c"]
 [ext_resource type="PackedScene" uid="uid://lmo2htf7heq1" path="res://WorldStuff/map.tscn" id="2_f3upd"]
 [ext_resource type="Script" path="res://WorldStuff/Combat/CombatManager.gd" id="2_rvt2f"]
+[ext_resource type="Script" path="res://WorldStuff/Cells/CellEvent.gd" id="3_5o4d7"]
+[ext_resource type="PackedScene" uid="uid://cda1qjv2pgm6a" path="res://PlayerStuff/player_pawn.tscn" id="3_pihb5"]
 [ext_resource type="PackedScene" uid="uid://sd2k112rexxb" path="res://WorldStuff/Combat/combat_slot.tscn" id="3_rttpj"]
+[ext_resource type="Texture2D" uid="uid://dmhcnjweq1x78" path="res://Art/—Pngtree—yellow three-dimensional cute cartoon question_4573159.png" id="4_j8ldo"]
 [ext_resource type="Script" path="res://Player.gd" id="6_tqrav"]
+[ext_resource type="Script" path="res://PlayerStuff/ItemManager.gd" id="10_23yfe"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xru2"]
 bg_color = Color(0, 0, 0, 1)
@@ -21,6 +25,10 @@ bg_color = Color(0.593255, 0.51, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kl5mq"]
 bg_color = Color(1, 1, 0, 1)
+
+[sub_resource type="Resource" id="Resource_6b7sf"]
+script = ExtResource("3_5o4d7")
+sprite = ExtResource("4_j8ldo")
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -252,8 +260,13 @@ handle_input_locally = false
 size = Vector2i(1456, 916)
 render_target_update_mode = 4
 
-[node name="World" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("map") instance=ExtResource("1_bmo7q")]
+[node name="World" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("map", "player_pawn") instance=ExtResource("1_bmo7q")]
 map = NodePath("../../../Map")
+player_pawn = NodePath("PlayerPawn")
+text_cell_event = SubResource("Resource_6b7sf")
+
+[node name="PlayerPawn" parent="SubViewportContainer/SubViewport/World" node_paths=PackedStringArray("raycast") instance=ExtResource("3_pihb5")]
+raycast = NodePath("RayCast3D")
 
 [node name="CombatManager" type="PanelContainer" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("back_row_holder", "middle_row_holder", "front_row_holder")]
 visible = false
@@ -283,7 +296,9 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Map" parent="." instance=ExtResource("2_f3upd")]
-visible = false
 
 [node name="Player" type="Node" parent="."]
 script = ExtResource("6_tqrav")
+
+[node name="ItemManager" type="Node" parent="Player"]
+script = ExtResource("10_23yfe")

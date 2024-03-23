@@ -1,20 +1,23 @@
-[gd_resource type="Resource" script_class="CellData" load_steps=6 format=3 uid="uid://ddndxnwibngx3"]
+[gd_resource type="Resource" script_class="CellData" load_steps=7 format=3 uid="uid://ddndxnwibngx3"]
 
-[ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="1_byv7t"]
+[ext_resource type="Texture2D" uid="uid://cr3twjhy5hc1v" path="res://Art/Textures/PavingStones009_1K-JPG/PavingStones009_1K-JPG_Color.jpg" id="1_7pjly"]
 [ext_resource type="Script" path="res://WorldStuff/Cells/CellData.gd" id="1_ipq8a"]
+[ext_resource type="Texture2D" uid="uid://dilb4byc2p7c3" path="res://Art/Textures/Rock035_1K-JPG/Rock035_1K-JPG_Color.jpg" id="2_wy4uj"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwcnq"]
-albedo_texture = ExtResource("1_byv7t")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6bfnn"]
+albedo_color = Color(1, 0.635294, 1, 1)
+albedo_texture = ExtResource("1_7pjly")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0cm1j"]
-albedo_texture = ExtResource("1_byv7t")
+albedo_texture = ExtResource("2_wy4uj")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v4vy3"]
-albedo_texture = ExtResource("1_byv7t")
+albedo_texture = ExtResource("1_7pjly")
 
 [resource]
 script = ExtResource("1_ipq8a")
-ground = SubResource("StandardMaterial3D_lwcnq")
+test_name = "BASIC"
+ground = SubResource("StandardMaterial3D_6bfnn")
 walls = SubResource("StandardMaterial3D_v4vy3")
 roof = SubResource("StandardMaterial3D_0cm1j")
 hide_roof = false

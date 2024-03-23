@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CellEvent" load_steps=3 format=3 uid="uid://ilh1ckwp44u1"]
+
+[ext_resource type="Script" path="res://WorldStuff/Cells/CellEvent.gd" id="1_udnef"]
+[ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="2_yv21h"]
+
+[resource]
+script = ExtResource("1_udnef")
+sprite = ExtResource("2_yv21h")

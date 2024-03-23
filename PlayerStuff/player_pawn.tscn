@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cda1qjv2pgm6a"]
+
+[ext_resource type="Script" path="res://PlayerStuff/PlayerPawn.gd" id="1_fx3bi"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0gwhq"]
+
+[node name="PlayerPawn" type="Camera3D" node_paths=PackedStringArray("raycast")]
+script = ExtResource("1_fx3bi")
+raycast = NodePath("RayCast3D")
+
+[node name="PlayerHitBox" type="Area3D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerHitBox"]
+shape = SubResource("SphereShape3D_0gwhq")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -1)
+collide_with_areas = true
+collide_with_bodies = false
+
+[connection signal="area_entered" from="PlayerHitBox" to="." method="_on_player_hit_box_area_entered"]

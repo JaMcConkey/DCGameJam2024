@@ -1,8 +1,9 @@
 extends Area3D
 class_name Cell
 
-var walls = []
+var cell_event
 
+var walls = []
 var pos = Vector3()
 var lock_move : bool = false
 var north_wall : MeshInstance3D
@@ -22,16 +23,15 @@ func _ready():
 	walls += [north_wall,east_wall,south_wall,west_wall]
 
 func on_player_enter(player : PlayerPawn):
-	print("PLAYER ENTERED")
 	pass
 
 func init_cell(cell_data : CellData):
-	floor_tile.mesh.material = cell_data.ground
-	roof.mesh.material = cell_data.roof
+	floor_tile.mesh.material = cell_data.get_floor()
+	roof.mesh.material = cell_data.get_roof()
 	if cell_data.hide_roof:
 		roof.hide()
 	for wall in walls:
-		wall.mesh.material = cell_data.walls
+		wall.mesh.material = cell_data.get_walls()
 	pos = global_position
 
 func hide_faces(all_cells):
@@ -52,3 +52,7 @@ func hide_faces(all_cells):
 				north_wall.hide()
 			elif neighbor == pos + Vector3.BACK:
 				south_wall.hide()
+
+func add_event(event):
+	cell_event = event
+	$EventVisual.texture = event.sprite
