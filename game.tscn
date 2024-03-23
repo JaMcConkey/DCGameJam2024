@@ -1,8 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bqxxuvy4xijdd"]
+[gd_scene load_steps=12 format=3 uid="uid://bqxxuvy4xijdd"]
 
 [ext_resource type="PackedScene" uid="uid://bsf842ogqigq6" path="res://WorldStuff/world.tscn" id="1_bmo7q"]
 [ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="1_ja61c"]
 [ext_resource type="PackedScene" uid="uid://lmo2htf7heq1" path="res://WorldStuff/map.tscn" id="2_f3upd"]
+[ext_resource type="Script" path="res://WorldStuff/Combat/CombatManager.gd" id="2_rvt2f"]
+[ext_resource type="PackedScene" uid="uid://sd2k112rexxb" path="res://WorldStuff/Combat/combat_slot.tscn" id="3_rttpj"]
+[ext_resource type="Script" path="res://Player.gd" id="6_tqrav"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xru2"]
 bg_color = Color(0, 0, 0, 1)
@@ -36,7 +39,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_1xru2")
 
-[node name="Character" type="Panel" parent="."]
+[node name="CharacterUI" type="Panel" parent="."]
 custom_minimum_size = Vector2(462, 1080)
 layout_mode = 1
 anchors_preset = 1
@@ -46,54 +49,54 @@ offset_left = -462.0
 offset_bottom = 1080.0
 grow_horizontal = 0
 
-[node name="MAYBE NOT USED" type="HBoxContainer" parent="Character"]
+[node name="MAYBE NOT USED" type="HBoxContainer" parent="CharacterUI"]
 visible = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 
-[node name="Labels" type="VBoxContainer" parent="Character/MAYBE NOT USED"]
+[node name="Labels" type="VBoxContainer" parent="CharacterUI/MAYBE NOT USED"]
 custom_minimum_size = Vector2(60, 32)
 layout_mode = 2
 
-[node name="NameLabel" type="RichTextLabel" parent="Character/MAYBE NOT USED/Labels"]
+[node name="NameLabel" type="RichTextLabel" parent="CharacterUI/MAYBE NOT USED/Labels"]
 layout_mode = 2
 text = "Name:"
 fit_content = true
 
-[node name="ClassLabel" type="RichTextLabel" parent="Character/MAYBE NOT USED/Labels"]
+[node name="ClassLabel" type="RichTextLabel" parent="CharacterUI/MAYBE NOT USED/Labels"]
 layout_mode = 2
 text = "Class:
 "
 fit_content = true
 
-[node name="LevelLabel" type="RichTextLabel" parent="Character/MAYBE NOT USED/Labels"]
+[node name="LevelLabel" type="RichTextLabel" parent="CharacterUI/MAYBE NOT USED/Labels"]
 layout_mode = 2
 text = "Level:
 "
 fit_content = true
 
-[node name="Values" type="VBoxContainer" parent="Character/MAYBE NOT USED"]
+[node name="Values" type="VBoxContainer" parent="CharacterUI/MAYBE NOT USED"]
 custom_minimum_size = Vector2(200, 32)
 layout_mode = 2
 
-[node name="NameValue" type="RichTextLabel" parent="Character/MAYBE NOT USED/Values"]
+[node name="NameValue" type="RichTextLabel" parent="CharacterUI/MAYBE NOT USED/Values"]
 layout_mode = 2
 text = "James"
 fit_content = true
 
-[node name="ClassValue" type="RichTextLabel" parent="Character/MAYBE NOT USED/Values"]
+[node name="ClassValue" type="RichTextLabel" parent="CharacterUI/MAYBE NOT USED/Values"]
 layout_mode = 2
 text = "Paladin"
 fit_content = true
 
-[node name="LevelValue" type="RichTextLabel" parent="Character/MAYBE NOT USED/Values"]
+[node name="LevelValue" type="RichTextLabel" parent="CharacterUI/MAYBE NOT USED/Values"]
 layout_mode = 2
 text = "5"
 fit_content = true
 
-[node name="Portrait" type="TextureRect" parent="Character"]
+[node name="Portrait" type="TextureRect" parent="CharacterUI"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -105,7 +108,7 @@ offset_bottom = 171.0
 grow_horizontal = 2
 texture = ExtResource("1_ja61c")
 
-[node name="CharacterInfo" type="RichTextLabel" parent="Character"]
+[node name="CharacterInfo" type="RichTextLabel" parent="CharacterUI"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -119,7 +122,7 @@ text = "[center]James
 Paladin - 5[/center]"
 fit_content = true
 
-[node name="Health" type="RichTextLabel" parent="Character"]
+[node name="Health" type="RichTextLabel" parent="CharacterUI"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -130,7 +133,7 @@ bbcode_enabled = true
 text = "[center]Health[/center]"
 fit_content = true
 
-[node name="HealthBar" type="ProgressBar" parent="Character"]
+[node name="HealthBar" type="ProgressBar" parent="CharacterUI"]
 custom_minimum_size = Vector2(150, 26)
 layout_mode = 1
 anchors_preset = 8
@@ -148,7 +151,7 @@ theme_override_styles/background = SubResource("StyleBoxFlat_gna6j")
 theme_override_styles/fill = SubResource("StyleBoxFlat_eh86f")
 value = 50.0
 
-[node name="Sanity" type="RichTextLabel" parent="Character"]
+[node name="Sanity" type="RichTextLabel" parent="CharacterUI"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -159,7 +162,7 @@ bbcode_enabled = true
 text = "[center]Sanity[/center]"
 fit_content = true
 
-[node name="SanityBar" type="ProgressBar" parent="Character"]
+[node name="SanityBar" type="ProgressBar" parent="CharacterUI"]
 custom_minimum_size = Vector2(150, 26)
 layout_mode = 1
 anchors_preset = 8
@@ -177,7 +180,7 @@ theme_override_styles/background = SubResource("StyleBoxFlat_24ta0")
 theme_override_styles/fill = SubResource("StyleBoxFlat_kl5mq")
 value = 50.0
 
-[node name="Stats" type="Panel" parent="Character"]
+[node name="Stats" type="Panel" parent="CharacterUI"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -188,7 +191,7 @@ offset_bottom = 74.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Character/Stats"]
+[node name="RichTextLabel" type="RichTextLabel" parent="CharacterUI/Stats"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -208,7 +211,7 @@ DEFENSIVE: OO
 ADAPTRIVE: X
 X = Spent O = Available"
 
-[node name="Actions" type="Panel" parent="Character"]
+[node name="Actions" type="Panel" parent="CharacterUI"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -218,7 +221,7 @@ offset_top = -415.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Character/Actions"]
+[node name="RichTextLabel" type="RichTextLabel" parent="CharacterUI/Actions"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -239,18 +242,48 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -464.0
-offset_bottom = -277.0
+offset_bottom = -164.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1456, 803)
+size = Vector2i(1456, 916)
 render_target_update_mode = 4
 
 [node name="World" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("map") instance=ExtResource("1_bmo7q")]
 map = NodePath("../../../Map")
 
+[node name="CombatManager" type="PanelContainer" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("back_row_holder", "middle_row_holder", "front_row_holder")]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_rvt2f")
+combat_slot_scene = ExtResource("3_rttpj")
+back_row_holder = NodePath("VBoxContainer/BackRow")
+middle_row_holder = NodePath("VBoxContainer/MiddleRow")
+front_row_holder = NodePath("VBoxContainer/FrontRow")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport/CombatManager"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BackRow" type="HBoxContainer" parent="SubViewportContainer/SubViewport/CombatManager/VBoxContainer"]
+layout_mode = 2
+
+[node name="MiddleRow" type="HBoxContainer" parent="SubViewportContainer/SubViewport/CombatManager/VBoxContainer"]
+layout_mode = 2
+
+[node name="FrontRow" type="HBoxContainer" parent="SubViewportContainer/SubViewport/CombatManager/VBoxContainer"]
+layout_mode = 2
+
 [node name="Map" parent="." instance=ExtResource("2_f3upd")]
 visible = false
+
+[node name="Player" type="Node" parent="."]
+script = ExtResource("6_tqrav")

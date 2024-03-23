@@ -34,7 +34,6 @@ func move_forward():
 		return
 	moving = true
 	var tween = get_tree().create_tween()
-	
 	# calculate the forward vector based on the current rotation
 	var forward = -global_transform.basis.z.normalized()
 	# get distance needed to move
@@ -47,18 +46,12 @@ func turn_left():
 	tween_rotation(90)
 func turn_right():
 	tween_rotation(-90)
-func tween_move(direction):
-	pass
-func _ready():
-	
-	tween = get_tree().create_tween()
-	
+
 # This will cause problems later, as Rotation does not stop at 360. So we can
 #go up forever right now
 func tween_rotation(degrees):
 	if moving:
 		return
-	tween.kill()
 	moving = true
 	var tween = get_tree().create_tween()
 	var current_rotation = rotation_degrees.y

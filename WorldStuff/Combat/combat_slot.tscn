@@ -1,0 +1,87 @@
+[gd_scene load_steps=5 format=3 uid="uid://sd2k112rexxb"]
+
+[ext_resource type="Script" path="res://WorldStuff/Combat/CombatSlot.gd" id="1_fvn7s"]
+[ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="2_qiufe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_37ifj"]
+draw_center = false
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.560784, 0, 0.219608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1iowt"]
+draw_center = false
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.862745, 1, 0.109804, 1)
+
+[node name="CombatSlot" type="Control" node_paths=PackedStringArray("highlight_panel", "show_effected_panel", "monster_picture")]
+custom_minimum_size = Vector2(384, 256)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1536.0
+offset_bottom = -824.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fvn7s")
+highlight_panel = NodePath("Panel/Highlight")
+show_effected_panel = NodePath("Panel/ShowEffected")
+monster_picture = NodePath("Panel/Portrait")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Portrait" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("2_qiufe")
+
+[node name="Name" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="ShowEffected" type="Panel" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_37ifj")
+
+[node name="Highlight" type="Panel" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1iowt")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
