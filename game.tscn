@@ -217,7 +217,7 @@ INT: 333
 OFFENSIVE : OOX
 DEFENSIVE: OO
 ADAPTRIVE: X
-X = Spent O = Available"
+"
 
 [node name="Actions" type="Panel" parent="CharacterUI"]
 layout_mode = 1
