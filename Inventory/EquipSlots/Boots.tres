@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="EquipSlotType" load_steps=2 format=3 uid="uid://dfgjw5ewni3xa"]
+
+[ext_resource type="Script" path="res://Inventory/EquipSlots/equip_slot_type.gd" id="1_eted6"]
+
+[resource]
+script = ExtResource("1_eted6")
+slot_name = "Boots"

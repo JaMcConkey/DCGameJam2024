@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EquipItemData" load_steps=4 format=3 uid="uid://df2hdk4vvrca3"]
+
+[ext_resource type="Resource" uid="uid://cac6qef1ptkyl" path="res://Inventory/EquipSlots/Helm.tres" id="1_uikc2"]
+[ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="2_8kc4b"]
+[ext_resource type="Script" path="res://Inventory/equip_item_data.gd" id="3_g8tfd"]
+
+[resource]
+script = ExtResource("3_g8tfd")
+equip_slot_type = ExtResource("1_uikc2")
+item_name = "Simple Helm"
+description = ""
+stackable = false
+image = ExtResource("2_8kc4b")

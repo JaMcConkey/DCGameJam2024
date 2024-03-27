@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=2 format=3 uid="uid://c3tajcs2nw87o"]
+
+[ext_resource type="Script" path="res://PlayerStuff/Weapons/Weapon.gd" id="1_gumeo"]
+
+[resource]
+script = ExtResource("1_gumeo")
+damage = 0

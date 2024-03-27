@@ -2,4 +2,6 @@ extends Resource
 class_name Weapon
 
 @export var targeting : GridTargeting
-@export_range(0,99999) var damage : int
+@export var weapon_power : float
+@export var weapon_magic : float
+

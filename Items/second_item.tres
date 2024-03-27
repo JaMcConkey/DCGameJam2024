@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://cq7iso4use823"]
+
+[ext_resource type="Texture2D" uid="uid://dmhcnjweq1x78" path="res://Art/—Pngtree—yellow three-dimensional cute cartoon question_4573159.png" id="1_bd6up"]
+[ext_resource type="Script" path="res://Inventory/item_data.gd" id="2_kn7yb"]
+
+[resource]
+script = ExtResource("2_kn7yb")
+item_name = "SECOND TESTER"
+description = "TEST ITEM"
+stackable = false
+image = ExtResource("1_bd6up")

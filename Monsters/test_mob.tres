@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Enemy" load_steps=3 format=3 uid="uid://ckv21i83884nx"]
+
+[ext_resource type="Script" path="res://Monsters/Monster.gd" id="1_g7ybr"]
+[ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="1_yu2p6"]
+
+[resource]
+script = ExtResource("1_g7ybr")
+enemy_name = "fucko"
+enemy_image = ExtResource("1_yu2p6")
+max_health = 100.0

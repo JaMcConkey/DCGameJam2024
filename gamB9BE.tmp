@@ -1,0 +1,138 @@
+[gd_scene load_steps=18 format=3 uid="uid://bqxxuvy4xijdd"]
+
+[ext_resource type="PackedScene" uid="uid://1hm25sspnfju" path="res://PlayerStuff/UI/character_ui.tscn" id="1_4im0x"]
+[ext_resource type="PackedScene" uid="uid://bsf842ogqigq6" path="res://WorldStuff/world.tscn" id="1_bmo7q"]
+[ext_resource type="PackedScene" uid="uid://ddit4uvjadc7n" path="res://Inventory/inventory.tscn" id="1_k0x8p"]
+[ext_resource type="PackedScene" uid="uid://lmo2htf7heq1" path="res://WorldStuff/map.tscn" id="2_f3upd"]
+[ext_resource type="Script" path="res://WorldStuff/Combat/CombatManager.gd" id="2_rvt2f"]
+[ext_resource type="Script" path="res://WorldStuff/Cells/CellEvent.gd" id="3_5o4d7"]
+[ext_resource type="PackedScene" uid="uid://cda1qjv2pgm6a" path="res://PlayerStuff/player_pawn.tscn" id="3_pihb5"]
+[ext_resource type="PackedScene" uid="uid://sd2k112rexxb" path="res://WorldStuff/Combat/combat_slot.tscn" id="3_rttpj"]
+[ext_resource type="Texture2D" uid="uid://dmhcnjweq1x78" path="res://Art/—Pngtree—yellow three-dimensional cute cartoon question_4573159.png" id="4_j8ldo"]
+[ext_resource type="Script" path="res://Player.gd" id="6_tqrav"]
+[ext_resource type="Resource" uid="uid://ckv21i83884nx" path="res://Monsters/test_mob.tres" id="8_8y5ip"]
+[ext_resource type="Script" path="res://PlayerStuff/ItemManager.gd" id="10_23yfe"]
+[ext_resource type="Script" path="res://PlayerStuff/ActionManager.gd" id="11_hdeul"]
+[ext_resource type="Script" path="res://PlayerStats.gd" id="12_15xxi"]
+[ext_resource type="Resource" uid="uid://753i01hfwebi" path="res://Items/test_inventory.tres" id="12_ig82b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xru2"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_6b7sf"]
+script = ExtResource("3_5o4d7")
+sprite = ExtResource("4_j8ldo")
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 346.0
+offset_bottom = 206.0
+
+[node name="PlayerInventory" parent="UI/Control" instance=ExtResource("1_k0x8p")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="GamePanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1xru2")
+
+[node name="CharacterUI" parent="." instance=ExtResource("1_4im0x")]
+layout_mode = 1
+anchors_preset = 6
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -540.0
+offset_bottom = 540.0
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -464.0
+offset_bottom = -164.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1456, 916)
+render_target_update_mode = 4
+
+[node name="World" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("map", "player_pawn") instance=ExtResource("1_bmo7q")]
+map = NodePath("../../../Map")
+player_pawn = NodePath("PlayerPawn")
+text_cell_event = SubResource("Resource_6b7sf")
+
+[node name="PlayerPawn" parent="SubViewportContainer/SubViewport/World" node_paths=PackedStringArray("raycast") instance=ExtResource("3_pihb5")]
+raycast = NodePath("RayCast3D")
+
+[node name="CombatManager" type="PanelContainer" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("back_row_holder", "middle_row_holder", "front_row_holder")]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_rvt2f")
+combat_slot_scene = ExtResource("3_rttpj")
+back_row_holder = NodePath("VBoxContainer/BackRow")
+middle_row_holder = NodePath("VBoxContainer/MiddleRow")
+front_row_holder = NodePath("VBoxContainer/FrontRow")
+test_enemy = ExtResource("8_8y5ip")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport/CombatManager"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BackRow" type="HBoxContainer" parent="SubViewportContainer/SubViewport/CombatManager/VBoxContainer"]
+layout_mode = 2
+
+[node name="MiddleRow" type="HBoxContainer" parent="SubViewportContainer/SubViewport/CombatManager/VBoxContainer"]
+layout_mode = 2
+
+[node name="FrontRow" type="HBoxContainer" parent="SubViewportContainer/SubViewport/CombatManager/VBoxContainer"]
+layout_mode = 2
+
+[node name="Map" parent="." instance=ExtResource("2_f3upd")]
+visible = false
+
+[node name="Player" type="Node" parent="."]
+script = ExtResource("6_tqrav")
+inventory_data = ExtResource("12_ig82b")
+
+[node name="ItemManager" type="Node" parent="Player"]
+script = ExtResource("10_23yfe")
+
+[node name="ActionManager" type="Node" parent="Player"]
+script = ExtResource("11_hdeul")
+
+[node name="Stats" type="Node" parent="Player"]
+script = ExtResource("12_15xxi")

@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://sd2k112rexxb"]
+[gd_scene load_steps=6 format=3 uid="uid://sd2k112rexxb"]
 
 [ext_resource type="Script" path="res://WorldStuff/Combat/CombatSlot.gd" id="1_fvn7s"]
-[ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="2_qiufe"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_37ifj"]
 draw_center = false
@@ -19,7 +18,13 @@ border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.862745, 1, 0.109804, 1)
 
-[node name="CombatSlot" type="Control" node_paths=PackedStringArray("highlight_panel", "show_effected_panel", "monster_picture")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16a1c"]
+bg_color = Color(0.914186, 0.416555, 0.489504, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n5frp"]
+bg_color = Color(0, 0.716212, 0.39694, 1)
+
+[node name="CombatSlot" type="Control" node_paths=PackedStringArray("highlight_panel", "show_effected_panel", "monster_picture", "health_bar", "health_label", "name_label", "monster_info_main", "anim")]
 custom_minimum_size = Vector2(384, 256)
 layout_mode = 3
 anchors_preset = 15
@@ -32,7 +37,12 @@ grow_vertical = 2
 script = ExtResource("1_fvn7s")
 highlight_panel = NodePath("Panel/Highlight")
 show_effected_panel = NodePath("Panel/ShowEffected")
-monster_picture = NodePath("Panel/Portrait")
+monster_picture = NodePath("MonsterInfo/Portrait")
+health_bar = NodePath("MonsterInfo/HealthBar")
+health_label = NodePath("MonsterInfo/HealthBar/HealthLabel")
+name_label = NodePath("MonsterInfo/Name")
+monster_info_main = NodePath("MonsterInfo")
+anim = NodePath("AnimSprite")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -41,24 +51,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-
-[node name="Portrait" type="TextureRect" parent="Panel"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
-grow_horizontal = 2
-mouse_filter = 2
-texture = ExtResource("2_qiufe")
-
-[node name="Name" type="RichTextLabel" parent="Panel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 mouse_filter = 2
 
 [node name="ShowEffected" type="Panel" parent="Panel"]
@@ -83,5 +75,67 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_1iowt")
 
+[node name="MonsterInfo" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Portrait" type="TextureRect" parent="MonsterInfo"]
+layout_mode = 2
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 108.0
+offset_top = 24.0
+offset_right = 236.0
+offset_bottom = 152.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Name" type="RichTextLabel" parent="MonsterInfo"]
+layout_mode = 2
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 108.0
+offset_right = 236.0
+offset_bottom = 24.0
+grow_horizontal = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center]Monster Name[/center]"
+fit_content = true
+
+[node name="HealthBar" type="ProgressBar" parent="MonsterInfo"]
+layout_mode = 2
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 116.0
+offset_top = 112.0
+offset_right = 228.0
+offset_bottom = 139.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_16a1c")
+theme_override_styles/fill = SubResource("StyleBoxFlat_n5frp")
+value = 50.0
+show_percentage = false
+
+[node name="HealthLabel" type="Label" parent="MonsterInfo/HealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "10/10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(192, 80)
+animation = &"effect"
+
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="animation_looped" from="AnimSprite" to="." method="_on_anim_sprite_animation_looped"]

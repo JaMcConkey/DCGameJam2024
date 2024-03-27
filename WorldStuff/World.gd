@@ -7,6 +7,7 @@ var cell_size : int = 1
 @export var player_pawn : PlayerPawn
 @export var test_cell_data : CellData
 @export var text_cell_event : CellEvent
+@export var test_enemy : Enemy
 
 var cells = []
 
@@ -30,7 +31,7 @@ func _ready():
 #and disable movement if there is one to resolve
 func handle_tile_enter(cell_entered : Cell):
 	if cell_entered.cell_event != null:
-		player_pawn.toggle_move_and_rotate(false)
+		PlayerManager.toggle_move_and_rotate(false)
 	#Right now my thought is for cell_entered to trigger things liek ground damage
 	cell_entered.on_player_enter(player_pawn)
 	pass
@@ -49,13 +50,12 @@ func generate_map():
 		var cell_data = tile_data.get_custom_data_by_layer_id(0)
 		if cell_data is CellData:
 			cell.init_cell(cell_data)
-			print(cell_data.test_name)
-			print("SHOULD USE TILEMAP DATA HERE")
 		else:
+			print("ERROR: No cell data added, using default data")
 			cell.init_cell(test_cell_data)
 		
-		#if randf() < 0.25:
-			#cell.add_event(text_cell_event)
+		if randf() < 0.25:
+			cell.add_event(text_cell_event)
 	#
 	# Create a dictionary to map positions to cells for easy lookup
 	var all_cells = {}

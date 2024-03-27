@@ -13,24 +13,15 @@ var can_rotate : bool = true
 
 @export var raycast : RayCast3D
 
-func toggle_move_and_rotate(toggle : bool):
-	can_move = toggle
-	can_rotate = toggle
+func _ready():
+	PlayerManager.player_pawn = self
 
-func _input(event):
-	if can_rotate:
-		if event.is_action_pressed("TurnLeft"):
-			turn_left()
-		if event.is_action_pressed("TurnRight"):
-			turn_right()
-	if can_move:
-		if event.is_action_pressed("Forward"):
-			if raycast.is_colliding():
-				move_forward()
-				return
+
 func move_forward():
-	if moving:
+	#If we are moving or raycast is not colliding (Can't see into next tile) bail
+	if moving or not raycast.is_colliding():
 		return
+	
 	moving = true
 	var tween = get_tree().create_tween()
 	# calculate the forward vector based on the current rotation

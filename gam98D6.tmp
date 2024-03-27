@@ -1,0 +1,314 @@
+[gd_scene load_steps=20 format=3 uid="uid://bqxxuvy4xijdd"]
+
+[ext_resource type="PackedScene" uid="uid://bsf842ogqigq6" path="res://WorldStuff/world.tscn" id="1_bmo7q"]
+[ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="1_ja61c"]
+[ext_resource type="PackedScene" uid="uid://lmo2htf7heq1" path="res://WorldStuff/map.tscn" id="2_f3upd"]
+[ext_resource type="Script" path="res://WorldStuff/Combat/CombatManager.gd" id="2_rvt2f"]
+[ext_resource type="Script" path="res://WorldStuff/Cells/CellEvent.gd" id="3_5o4d7"]
+[ext_resource type="PackedScene" uid="uid://cda1qjv2pgm6a" path="res://PlayerStuff/player_pawn.tscn" id="3_pihb5"]
+[ext_resource type="PackedScene" uid="uid://sd2k112rexxb" path="res://WorldStuff/Combat/combat_slot.tscn" id="3_rttpj"]
+[ext_resource type="Texture2D" uid="uid://dmhcnjweq1x78" path="res://Art/—Pngtree—yellow three-dimensional cute cartoon question_4573159.png" id="4_j8ldo"]
+[ext_resource type="Script" path="res://Player.gd" id="6_tqrav"]
+[ext_resource type="Resource" uid="uid://ckv21i83884nx" path="res://Monsters/test_mob.tres" id="8_8y5ip"]
+[ext_resource type="Script" path="res://PlayerStuff/ItemManager.gd" id="10_23yfe"]
+[ext_resource type="Script" path="res://PlayerStuff/ActionManager.gd" id="11_hdeul"]
+[ext_resource type="Script" path="res://PlayerStats.gd" id="12_15xxi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xru2"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gna6j"]
+bg_color = Color(0.779982, 0, 0.195866, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eh86f"]
+bg_color = Color(0, 0.718545, 0.359683, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_24ta0"]
+bg_color = Color(0.593255, 0.51, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kl5mq"]
+bg_color = Color(1, 1, 0, 1)
+
+[sub_resource type="Resource" id="Resource_6b7sf"]
+script = ExtResource("3_5o4d7")
+sprite = ExtResource("4_j8ldo")
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GamePanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1xru2")
+
+[node name="CharacterUI" type="Panel" parent="."]
+custom_minimum_size = Vector2(462, 1080)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -462.0
+offset_bottom = 1080.0
+grow_horizontal = 0
+
+[node name="MAYBE NOT USED" type="HBoxContainer" parent="CharacterUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Labels" type="VBoxContainer" parent="CharacterUI/MAYBE NOT USED"]
+custom_minimum_size = Vector2(60, 32)
+layout_mode = 2
+
+[node name="NameLabel" type="RichTextLabel" parent="CharacterUI/MAYBE NOT USED/Labels"]
+layout_mode = 2
+text = "Name:"
+fit_content = true
+
+[node name="ClassLabel" type="RichTextLabel" parent="CharacterUI/MAYBE NOT USED/Labels"]
+layout_mode = 2
+text = "Class:
+"
+fit_content = true
+
+[node name="LevelLabel" type="RichTextLabel" parent="CharacterUI/MAYBE NOT USED/Labels"]
+layout_mode = 2
+text = "Level:
+"
+fit_content = true
+
+[node name="Values" type="VBoxContainer" parent="CharacterUI/MAYBE NOT USED"]
+custom_minimum_size = Vector2(200, 32)
+layout_mode = 2
+
+[node name="NameValue" type="RichTextLabel" parent="CharacterUI/MAYBE NOT USED/Values"]
+layout_mode = 2
+text = "James"
+fit_content = true
+
+[node name="ClassValue" type="RichTextLabel" parent="CharacterUI/MAYBE NOT USED/Values"]
+layout_mode = 2
+text = "Paladin"
+fit_content = true
+
+[node name="LevelValue" type="RichTextLabel" parent="CharacterUI/MAYBE NOT USED/Values"]
+layout_mode = 2
+text = "5"
+fit_content = true
+
+[node name="Portrait" type="TextureRect" parent="CharacterUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_top = 43.0
+offset_right = 64.0
+offset_bottom = 171.0
+grow_horizontal = 2
+texture = ExtResource("1_ja61c")
+
+[node name="CharacterInfo" type="RichTextLabel" parent="CharacterUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -59.0
+offset_right = 61.0
+offset_bottom = 69.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[center]James
+Paladin - 5[/center]"
+fit_content = true
+
+[node name="Health" type="RichTextLabel" parent="CharacterUI"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 192.0
+offset_bottom = 192.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[center]Health[/center]"
+fit_content = true
+
+[node name="HealthBar" type="ProgressBar" parent="CharacterUI"]
+custom_minimum_size = Vector2(150, 26)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -322.0
+offset_right = 75.0
+offset_bottom = -295.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_gna6j")
+theme_override_styles/fill = SubResource("StyleBoxFlat_eh86f")
+value = 50.0
+
+[node name="Sanity" type="RichTextLabel" parent="CharacterUI"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 246.0
+offset_bottom = 269.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[center]Sanity[/center]"
+fit_content = true
+
+[node name="SanityBar" type="ProgressBar" parent="CharacterUI"]
+custom_minimum_size = Vector2(150, 26)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -269.0
+offset_right = 75.0
+offset_bottom = -242.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_24ta0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_kl5mq")
+value = 50.0
+
+[node name="Stats" type="Panel" parent="CharacterUI"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -219.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CharacterUI/Stats"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "Stats stuff going here
+STR: 55555
+DEX:4444
+INT: 333
+
+
+[center] ACTION POOL [/center]
+OFFENSIVE : OOX
+DEFENSIVE: OO
+ADAPTRIVE: X
+"
+
+[node name="Actions" type="Panel" parent="CharacterUI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -415.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CharacterUI/Actions"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -236.5
+offset_bottom = -213.5
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]Actions[/center]
+"
+fit_content = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -464.0
+offset_bottom = -164.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1456, 916)
+render_target_update_mode = 4
+
+[node name="World" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("map", "player_pawn") instance=ExtResource("1_bmo7q")]
+map = NodePath("../../../Map")
+player_pawn = NodePath("PlayerPawn")
+text_cell_event = SubResource("Resource_6b7sf")
+
+[node name="PlayerPawn" parent="SubViewportContainer/SubViewport/World" node_paths=PackedStringArray("raycast") instance=ExtResource("3_pihb5")]
+raycast = NodePath("RayCast3D")
+
+[node name="CombatManager" type="PanelContainer" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("back_row_holder", "middle_row_holder", "front_row_holder")]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_rvt2f")
+combat_slot_scene = ExtResource("3_rttpj")
+back_row_holder = NodePath("VBoxContainer/BackRow")
+middle_row_holder = NodePath("VBoxContainer/MiddleRow")
+front_row_holder = NodePath("VBoxContainer/FrontRow")
+test_enemy = ExtResource("8_8y5ip")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport/CombatManager"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BackRow" type="HBoxContainer" parent="SubViewportContainer/SubViewport/CombatManager/VBoxContainer"]
+layout_mode = 2
+
+[node name="MiddleRow" type="HBoxContainer" parent="SubViewportContainer/SubViewport/CombatManager/VBoxContainer"]
+layout_mode = 2
+
+[node name="FrontRow" type="HBoxContainer" parent="SubViewportContainer/SubViewport/CombatManager/VBoxContainer"]
+layout_mode = 2
+
+[node name="Map" parent="." instance=ExtResource("2_f3upd")]
+
+[node name="Player" type="Node" parent="."]
+script = ExtResource("6_tqrav")
+
+[node name="ItemManager" type="Node" parent="Player"]
+script = ExtResource("10_23yfe")
+
+[node name="ActionManager" type="Node" parent="Player"]
+script = ExtResource("11_hdeul")
+
+[node name="Stats" type="Node" parent="Player"]
+script = ExtResource("12_15xxi")
