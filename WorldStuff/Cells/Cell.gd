@@ -1,7 +1,8 @@
 extends Area3D
 class_name Cell
 
-var cell_event
+var cell_event : CellEvent
+@onready var event_visual = $EventVisual
 
 var walls = []
 var pos = Vector3()
@@ -55,4 +56,9 @@ func hide_faces(all_cells):
 
 func add_event(event):
 	cell_event = event
-	$EventVisual.texture = event.sprite
+	event_visual.texture = event.sprite
+	event_visual.show()
+func remove_event():
+	print("SHOULD REMOVE EVENT")
+	cell_event = null
+	event_visual.hide()

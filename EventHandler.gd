@@ -1,0 +1,27 @@
+extends Node
+
+var active_event : GameEvent
+
+func add_event_to_que(event : CellEvent):
+	pass
+
+func do_event(event : GameEvent) -> void:
+	PlayerManager.toggle_move_and_rotate(false)
+	if event is CombatEvent:
+		_handle_combat_event(event)
+	elif event is CellEvent:
+		print("CELL EVENT")
+	else:
+		PlayerManager.toggle_move_and_rotate(true)
+		print("Unknown event type:", typeof(event)) 
+
+func _handle_combat_event(event : CombatEvent) -> void:
+	if not CombatManager.instance.combat_ended.is_connected(end_event):
+		CombatManager.instance.combat_ended.connect(end_event)
+	#Start a fight, resolve when it ends
+	active_event = event
+	CombatManager.instance.start_combat(event.combat_data)
+
+func end_event() -> void:
+	PlayerManager.toggle_move_and_rotate(true)
+	pass

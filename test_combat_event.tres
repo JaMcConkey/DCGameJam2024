@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CombatEvent" load_steps=8 format=3 uid="uid://blp411tty4bd3"]
+
+[ext_resource type="Resource" uid="uid://ckv21i83884nx" path="res://Monsters/test_mob.tres" id="1_7iemh"]
+[ext_resource type="Script" path="res://WorldStuff/Cells/CombatEvent.gd" id="1_s44hc"]
+[ext_resource type="Script" path="res://WorldStuff/Combat/EnemySpawnData.gd" id="2_y0xti"]
+[ext_resource type="Script" path="res://WorldStuff/Combat/EnemyCombatData.gd" id="3_jvfhd"]
+[ext_resource type="Texture2D" uid="uid://dmhcnjweq1x78" path="res://Art/—Pngtree—yellow three-dimensional cute cartoon question_4573159.png" id="5_xwcsg"]
+
+[sub_resource type="Resource" id="Resource_7twjs"]
+script = ExtResource("2_y0xti")
+enemy = ExtResource("1_7iemh")
+spawn_chance = 100.0
+slot = 5
+
+[sub_resource type="Resource" id="Resource_0q5rj"]
+script = ExtResource("3_jvfhd")
+spawn_data = Array[ExtResource("2_y0xti")]([SubResource("Resource_7twjs")])
+
+[resource]
+script = ExtResource("1_s44hc")
+combat_data = SubResource("Resource_0q5rj")
+sprite = ExtResource("5_xwcsg")

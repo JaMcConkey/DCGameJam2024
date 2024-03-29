@@ -1,6 +1,9 @@
 class_name CombatManager
 extends PanelContainer
 
+signal combat_started
+signal combat_ended
+
 @export var combat_slot_scene : PackedScene
 @export var back_row_holder : HBoxContainer 
 @export var middle_row_holder : HBoxContainer
@@ -10,22 +13,24 @@ extends PanelContainer
 @export var active_player_action : PlayerAction
 
 const grid_size = 3
+static var instance : CombatManager
 var grid : Array[CombatSlot]
 #This is just to show what slots will be hit by the action
 var effected_slots : Array[CombatSlot]
 var hovered_slot : CombatSlot
 var resolving_action : bool
+var in_combat : bool
 
 func _ready():
+	if instance == null:
+		instance = self
 	init_grid()
-	var enemy_to_assign = test_enemy.duplicate()
-	enemy_to_assign.init_enemy()
-	grid[3].assign_monster(enemy_to_assign)
-	print(grid[3].monster.current_health)
 
 func get_grid() -> Array[CombatSlot]:
 	return grid
 
+func set_active_action(action : PlayerAction):
+	active_player_action = action
 
 func init_grid():
 	grid.clear()
@@ -72,10 +77,39 @@ func make_row(holder, row_number):
 func action_resolved():
 	resolving_action = false
 
+func start_combat(combat_data : EnemyCombatData):
+	PlayerManager.toggle_move_and_rotate(false)
+	show()
+	in_combat = true
+	for data in combat_data.spawn_data:
+		var spawn_chance = randf_range(0,100)
+		if spawn_chance < data.spawn_chance:
+			if grid[data.slot] and grid[data.slot].monster == null:
+				var enemy = data.enemy.duplicate()
+				enemy.init_enemy()
+				grid[data.slot].assign_monster(enemy)
+
+func end_combat():
+	hide()
+	in_combat = false
+	combat_ended.emit()
+	PlayerManager.toggle_move_and_rotate(true)
+
 func _input(event):
 	if event.is_action_pressed("UseActivePlayerAction"):
 		if active_player_action and hovered_slot and not resolving_action:
-			print("SHOULD START RESOVLE HERE")
 			resolving_action = true
 			await active_player_action.process_action(hovered_slot,grid)
 			resolving_action = false
+
+func check_win() -> bool:
+	for cell in grid:
+		if cell.monster != null:
+			return false
+	return true
+
+func _physics_process(delta):
+	if in_combat:
+		if check_win():
+			print("SHOULD END COMBAT HERE")
+			end_combat()

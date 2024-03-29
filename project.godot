@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 PlayerManager="*res://PlayerManager.gd"
+EventLog="*res://event_log.tscn"
+EventHandler="*res://event_handler.tscn"
 
 [display]
 

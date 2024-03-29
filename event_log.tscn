@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bquvpsu844hu2"]
+
+[ext_resource type="Script" path="res://EventLog.gd" id="1_f4gt5"]
+
+[node name="EventLog" type="Node"]
+script = ExtResource("1_f4gt5")

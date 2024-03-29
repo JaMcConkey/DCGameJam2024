@@ -7,6 +7,7 @@ var can_move : bool = true
 var can_rotate : bool = true
 var can_change_equipment : bool = false
 
+
 func use_slot_data(slot_data : InventorySlotData):
 	slot_data.item_data.use(player)
 
@@ -24,4 +25,4 @@ func _input(event):
 			player_pawn.move_forward()
 			return
 	if event.is_action_released("TEST"):
-		InventoryInterface.instance.init_player_inventory()
+		World.instance.place_player_in_cell(World.instance.cells.pick_random())

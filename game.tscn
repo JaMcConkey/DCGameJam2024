@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://bqxxuvy4xijdd"]
+[gd_scene load_steps=53 format=3 uid="uid://bqxxuvy4xijdd"]
 
 [ext_resource type="PackedScene" uid="uid://1hm25sspnfju" path="res://PlayerStuff/UI/character_ui.tscn" id="1_4im0x"]
 [ext_resource type="Script" path="res://Inventory/inventory_interface.gd" id="1_5u8ub"]
@@ -6,21 +6,21 @@
 [ext_resource type="PackedScene" uid="uid://ddit4uvjadc7n" path="res://Inventory/inventory.tscn" id="1_k0x8p"]
 [ext_resource type="PackedScene" uid="uid://lmo2htf7heq1" path="res://WorldStuff/map.tscn" id="2_f3upd"]
 [ext_resource type="Script" path="res://WorldStuff/Combat/CombatManager.gd" id="2_rvt2f"]
-[ext_resource type="Script" path="res://WorldStuff/Cells/CellEvent.gd" id="3_5o4d7"]
 [ext_resource type="PackedScene" uid="uid://dy1ojuscnguqy" path="res://Inventory/inventory_slot.tscn" id="3_lbfnn"]
 [ext_resource type="PackedScene" uid="uid://cda1qjv2pgm6a" path="res://PlayerStuff/player_pawn.tscn" id="3_pihb5"]
 [ext_resource type="PackedScene" uid="uid://sd2k112rexxb" path="res://WorldStuff/Combat/combat_slot.tscn" id="3_rttpj"]
-[ext_resource type="Texture2D" uid="uid://dmhcnjweq1x78" path="res://Art/—Pngtree—yellow three-dimensional cute cartoon question_4573159.png" id="4_j8ldo"]
 [ext_resource type="PackedScene" uid="uid://dnrhfjf1r1am4" path="res://equip_inventory.tscn" id="4_vohes"]
 [ext_resource type="Resource" uid="uid://ckv21i83884nx" path="res://Monsters/test_mob.tres" id="8_8y5ip"]
 [ext_resource type="Script" path="res://PlayerStuff/ItemManager.gd" id="10_23yfe"]
-[ext_resource type="SpriteFrames" uid="uid://bdnitw7dsbypr" path="res://green_slash.tres" id="11_djtlk"]
+[ext_resource type="Script" path="res://CombatStuff/Damage.gd" id="10_65iyu"]
 [ext_resource type="Script" path="res://PlayerStuff/PlayerActions/ActionInterface.gd" id="12_xftfr"]
 [ext_resource type="Script" path="res://PlayerStuff/PlayerActions/PlayerDamageEffect.gd" id="13_a74p7"]
 [ext_resource type="Script" path="res://PlayerStuff/PlayerActions/PlayerAction.gd" id="14_16eow"]
+[ext_resource type="Script" path="res://EventLogger.gd" id="15_bqke4"]
 [ext_resource type="Script" path="res://PlayerStuff/PlayerActions/GridTargeting.gd" id="15_dmw7u"]
 [ext_resource type="Script" path="res://Inventory/inventory_data.gd" id="16_rtwg8"]
 [ext_resource type="Resource" uid="uid://cq7iso4use823" path="res://Items/second_item.tres" id="17_rpo8l"]
+[ext_resource type="Resource" uid="uid://blp411tty4bd3" path="res://test_combat_event.tres" id="17_tne16"]
 [ext_resource type="Script" path="res://Inventory/inventory_slot_data.gd" id="18_ub1ry"]
 [ext_resource type="Script" path="res://Player.gd" id="18_x7bm5"]
 [ext_resource type="Script" path="res://Inventory/equipment_inventory_data.gd" id="19_ogwxi"]
@@ -35,18 +35,21 @@
 [ext_resource type="Script" path="res://PlayerStuff/PlayerActions/PlayerActionManager.gd" id="30_3j0v7"]
 [ext_resource type="SpriteFrames" uid="uid://dple0wbwemqwt" path="res://slash_anim.tres" id="30_pbfbq"]
 [ext_resource type="Script" path="res://PlayerStuff/SanityManager.gd" id="34_una0w"]
+[ext_resource type="Script" path="res://PlayerStats.gd" id="35_qbqb3"]
+[ext_resource type="Script" path="res://UnitStuff/UnitStat.gd" id="37_8xvld"]
+
+[sub_resource type="Resource" id="Resource_5uh6f"]
+script = ExtResource("10_65iyu")
+phys_damage = 75
+mag_damage = 5
+true_damage = 0
 
 [sub_resource type="Resource" id="Resource_qo5k2"]
 script = ExtResource("13_a74p7")
-physical_damage = 5
+damage_effect = SubResource("Resource_5uh6f")
+physical_damage = 75
 magical_damage = 5
 anim_sprites = ExtResource("30_pbfbq")
-
-[sub_resource type="Resource" id="Resource_bv8gr"]
-script = ExtResource("13_a74p7")
-physical_damage = 0
-magical_damage = 0
-anim_sprites = ExtResource("11_djtlk")
 
 [sub_resource type="Resource" id="Resource_bk4kq"]
 script = ExtResource("15_dmw7u")
@@ -55,16 +58,14 @@ area_type = 0
 
 [sub_resource type="Resource" id="Resource_7dlox"]
 script = ExtResource("14_16eow")
+offensive_point_cost = 0
+defensive_point_cast = 0
 use_weapon_targeting = false
 targeting = SubResource("Resource_bk4kq")
-player_action_effects = Array[Resource("res://PlayerStuff/PlayerActions/PlayerActionEffect.gd")]([SubResource("Resource_qo5k2"), SubResource("Resource_bv8gr")])
+player_action_effects = Array[Resource("res://PlayerStuff/PlayerActions/PlayerActionEffect.gd")]([SubResource("Resource_qo5k2")])
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xru2"]
 bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="Resource" id="Resource_6b7sf"]
-script = ExtResource("3_5o4d7")
-sprite = ExtResource("4_j8ldo")
 
 [sub_resource type="Resource" id="Resource_noflh"]
 script = ExtResource("18_ub1ry")
@@ -109,6 +110,11 @@ slot_datas = Array[ExtResource("18_ub1ry")]([null])
 script = ExtResource("19_ogwxi")
 required_equip_type = ExtResource("27_jdpds")
 slot_datas = Array[ExtResource("18_ub1ry")]([null])
+
+[sub_resource type="Resource" id="Resource_mrqml"]
+script = ExtResource("37_8xvld")
+value_name = ""
+base_value = 0
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -217,6 +223,22 @@ offset_right = 1513.0
 offset_bottom = 711.0
 script = ExtResource("12_xftfr")
 
+[node name="EventLog" type="PanelContainer" parent="UI"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -163.0
+offset_right = -466.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("15_bqke4")
+
+[node name="EventText" type="RichTextLabel" parent="UI/EventLog"]
+layout_mode = 2
+bbcode_enabled = true
+scroll_following = true
+
 [node name="GamePanel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -245,7 +267,7 @@ render_target_update_mode = 4
 [node name="World" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("map", "player_pawn") instance=ExtResource("1_bmo7q")]
 map = NodePath("../../../Map")
 player_pawn = NodePath("PlayerPawn")
-text_cell_event = SubResource("Resource_6b7sf")
+text_cell_event = ExtResource("17_tne16")
 
 [node name="PlayerPawn" parent="SubViewportContainer/SubViewport/World" node_paths=PackedStringArray("raycast") instance=ExtResource("3_pihb5")]
 raycast = NodePath("RayCast3D")
@@ -266,6 +288,10 @@ script = ExtResource("30_3j0v7")
 
 [node name="SanityManager" type="Node" parent="Player"]
 script = ExtResource("34_una0w")
+
+[node name="PlayerStats" type="Node" parent="Player"]
+script = ExtResource("35_qbqb3")
+strength = SubResource("Resource_mrqml")
 
 [node name="BasicAttack" parent="." instance=ExtResource("29_tmv0e")]
 sprite_frames = ExtResource("30_pbfbq")
