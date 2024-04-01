@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://bqxxuvy4xijdd"]
+[gd_scene load_steps=70 format=3 uid="uid://bqxxuvy4xijdd"]
 
 [ext_resource type="PackedScene" uid="uid://1hm25sspnfju" path="res://PlayerStuff/UI/character_ui.tscn" id="1_4im0x"]
 [ext_resource type="Script" path="res://Inventory/inventory_interface.gd" id="1_5u8ub"]
@@ -18,20 +18,24 @@
 [ext_resource type="Script" path="res://PlayerStuff/PlayerActions/PlayerAction.gd" id="14_16eow"]
 [ext_resource type="Script" path="res://EventLogger.gd" id="15_bqke4"]
 [ext_resource type="Script" path="res://PlayerStuff/PlayerActions/GridTargeting.gd" id="15_dmw7u"]
+[ext_resource type="Script" path="res://Vignette.gd" id="16_0s3vl"]
 [ext_resource type="Script" path="res://Inventory/inventory_data.gd" id="16_rtwg8"]
+[ext_resource type="PackedScene" uid="uid://cihycsqbma6tl" path="res://WorldStuff/Cells/Events/Vignette/vignette_option.tscn" id="17_pnrgr"]
 [ext_resource type="Resource" uid="uid://cq7iso4use823" path="res://Items/second_item.tres" id="17_rpo8l"]
-[ext_resource type="Resource" uid="uid://blp411tty4bd3" path="res://test_combat_event.tres" id="17_tne16"]
 [ext_resource type="Script" path="res://Inventory/inventory_slot_data.gd" id="18_ub1ry"]
 [ext_resource type="Script" path="res://Player.gd" id="18_x7bm5"]
+[ext_resource type="Script" path="res://WorldStuff/Combat/EnemyCombatData.gd" id="19_8n7hm"]
 [ext_resource type="Script" path="res://Inventory/equipment_inventory_data.gd" id="19_ogwxi"]
 [ext_resource type="Resource" uid="uid://cac6qef1ptkyl" path="res://Inventory/EquipSlots/Helm.tres" id="20_1jn3b"]
+[ext_resource type="Script" path="res://WorldStuff/Combat/EnemySpawnData.gd" id="20_c4fi3"]
 [ext_resource type="Resource" uid="uid://df2hdk4vvrca3" path="res://Inventory/EquipSlots/TESTHELM.tres" id="20_eebsv"]
+[ext_resource type="Script" path="res://WorldStuff/Cells/CombatEvent.gd" id="21_ytyt7"]
+[ext_resource type="Texture2D" uid="uid://ddlnfap8mge78" path="res://Art/Textures/Rocks018_1K-JPG/Rocks018_1K-JPG_Color.jpg" id="22_mqddm"]
 [ext_resource type="Resource" uid="uid://c8j87fpsmal76" path="res://Inventory/EquipSlots/Chest.tres" id="24_ru2qn"]
 [ext_resource type="Resource" uid="uid://dmn0y4e81sww0" path="res://Inventory/EquipSlots/Legs.tres" id="25_dgqdj"]
 [ext_resource type="Resource" uid="uid://dfgjw5ewni3xa" path="res://Inventory/EquipSlots/Boots.tres" id="26_mu7wx"]
 [ext_resource type="Resource" uid="uid://2pp6738gb1cm" path="res://Inventory/EquipSlots/Weapon.tres" id="27_8ak8m"]
 [ext_resource type="Resource" uid="uid://cvalb3peg8csf" path="res://Inventory/EquipSlots/Offhand.tres" id="27_jdpds"]
-[ext_resource type="PackedScene" uid="uid://cexk22bo867nm" path="res://PlayerStuff/PlayerActions/basic_attack_anim.tscn" id="29_tmv0e"]
 [ext_resource type="Script" path="res://PlayerStuff/PlayerActions/PlayerActionManager.gd" id="30_3j0v7"]
 [ext_resource type="SpriteFrames" uid="uid://dple0wbwemqwt" path="res://slash_anim.tres" id="30_pbfbq"]
 [ext_resource type="Script" path="res://PlayerStuff/SanityManager.gd" id="34_una0w"]
@@ -58,14 +62,46 @@ area_type = 0
 
 [sub_resource type="Resource" id="Resource_7dlox"]
 script = ExtResource("14_16eow")
+action_name = "NEW ACTION"
 offensive_point_cost = 0
-defensive_point_cast = 0
+defensive_point_cost = 0
 use_weapon_targeting = false
 targeting = SubResource("Resource_bk4kq")
 player_action_effects = Array[Resource("res://PlayerStuff/PlayerActions/PlayerActionEffect.gd")]([SubResource("Resource_qo5k2")])
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ps5pd"]
+bg_color = Color(0.412152, 0.412152, 0.412152, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xru2"]
 bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_ylvi6"]
+script = ExtResource("20_c4fi3")
+enemy = ExtResource("8_8y5ip")
+spawn_chance = 100.0
+slot = 2
+
+[sub_resource type="Resource" id="Resource_faped"]
+resource_local_to_scene = true
+script = ExtResource("20_c4fi3")
+enemy = ExtResource("8_8y5ip")
+spawn_chance = 44.709
+slot = 3
+
+[sub_resource type="Resource" id="Resource_j83k6"]
+script = ExtResource("20_c4fi3")
+enemy = ExtResource("8_8y5ip")
+spawn_chance = 67.416
+slot = 1
+
+[sub_resource type="Resource" id="Resource_aqvyc"]
+script = ExtResource("19_8n7hm")
+spawn_data = Array[ExtResource("20_c4fi3")]([SubResource("Resource_ylvi6"), SubResource("Resource_faped"), SubResource("Resource_j83k6")])
+
+[sub_resource type="Resource" id="Resource_oe5lp"]
+script = ExtResource("21_ytyt7")
+combat_data = SubResource("Resource_aqvyc")
+sprite = ExtResource("22_mqddm")
 
 [sub_resource type="Resource" id="Resource_noflh"]
 script = ExtResource("18_ub1ry")
@@ -111,10 +147,45 @@ script = ExtResource("19_ogwxi")
 required_equip_type = ExtResource("27_jdpds")
 slot_datas = Array[ExtResource("18_ub1ry")]([null])
 
-[sub_resource type="Resource" id="Resource_mrqml"]
+[sub_resource type="Resource" id="Resource_krw4x"]
+script = ExtResource("37_8xvld")
+value_name = ""
+base_value = 4
+
+[sub_resource type="Resource" id="Resource_3mgx5"]
+script = ExtResource("37_8xvld")
+value_name = ""
+base_value = 2
+
+[sub_resource type="Resource" id="Resource_h05og"]
+script = ExtResource("37_8xvld")
+value_name = ""
+base_value = 6
+
+[sub_resource type="Resource" id="Resource_fed4r"]
+script = ExtResource("37_8xvld")
+value_name = ""
+base_value = 100
+
+[sub_resource type="Resource" id="Resource_4rf15"]
 script = ExtResource("37_8xvld")
 value_name = ""
 base_value = 0
+
+[sub_resource type="Resource" id="Resource_0jxdr"]
+script = ExtResource("37_8xvld")
+value_name = ""
+base_value = 0
+
+[sub_resource type="Resource" id="Resource_mi3fp"]
+script = ExtResource("37_8xvld")
+value_name = ""
+base_value = 5
+
+[sub_resource type="Resource" id="Resource_mjk8s"]
+script = ExtResource("37_8xvld")
+value_name = ""
+base_value = 3
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -130,9 +201,10 @@ grow_vertical = 2
 anchors_preset = 6
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -540.0
-offset_bottom = 540.0
+offset_top = -538.0
+offset_bottom = 542.0
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="InventoryInterface" type="Control" parent="UI"]
 layout_mode = 3
@@ -142,10 +214,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5u8ub")
-
-[node name="ConfirmDrop" type="ConfirmationDialog" parent="UI/InventoryInterface"]
-position = Vector2i(300, 300)
-dialog_text = "Drop Item?"
 
 [node name="EquipInventory" parent="UI/InventoryInterface" instance=ExtResource("4_vohes")]
 layout_mode = 0
@@ -185,8 +253,11 @@ offset_top = 27.0
 offset_right = -1266.0
 offset_bottom = -1053.0
 
+[node name="ConfirmDrop" type="ConfirmationDialog" parent="UI"]
+position = Vector2i(300, 300)
+dialog_text = "Drop Item?"
+
 [node name="CombatManager" type="PanelContainer" parent="UI" node_paths=PackedStringArray("back_row_holder", "middle_row_holder", "front_row_holder")]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -216,6 +287,12 @@ layout_mode = 2
 [node name="FrontRow" type="HBoxContainer" parent="UI/CombatManager/VBoxContainer"]
 layout_mode = 2
 
+[node name="DEBUG ACTION" type="Label" parent="UI/CombatManager"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "ACTION
+"
+
 [node name="ActionInterface" type="PanelContainer" parent="UI"]
 offset_left = 1473.0
 offset_top = 671.0
@@ -239,13 +316,56 @@ layout_mode = 2
 bbcode_enabled = true
 scroll_following = true
 
+[node name="Vignette" type="PanelContainer" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 114.0
+offset_right = -593.0
+offset_bottom = -158.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("16_0s3vl")
+option_scene = ExtResource("17_pnrgr")
+
+[node name="Panel" type="Panel" parent="UI/Vignette"]
+layout_direction = 1
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Vignette/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 34.0
+offset_top = 40.0
+offset_right = -61.0
+offset_bottom = -319.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ps5pd")
+bbcode_enabled = true
+text = "[center]Title of event - Incluse center tags[/center]
+this is the body of the event"
+fit_content = true
+
+[node name="option_holder" type="HBoxContainer" parent="UI/Vignette/Panel"]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 599.0
+offset_right = 1156.0
+offset_bottom = 915.0
+
 [node name="GamePanel" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_1xru2")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
@@ -267,7 +387,7 @@ render_target_update_mode = 4
 [node name="World" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("map", "player_pawn") instance=ExtResource("1_bmo7q")]
 map = NodePath("../../../Map")
 player_pawn = NodePath("PlayerPawn")
-text_cell_event = ExtResource("17_tne16")
+text_cell_event = SubResource("Resource_oe5lp")
 
 [node name="PlayerPawn" parent="SubViewportContainer/SubViewport/World" node_paths=PackedStringArray("raycast") instance=ExtResource("3_pihb5")]
 raycast = NodePath("RayCast3D")
@@ -291,14 +411,15 @@ script = ExtResource("34_una0w")
 
 [node name="PlayerStats" type="Node" parent="Player"]
 script = ExtResource("35_qbqb3")
-strength = SubResource("Resource_mrqml")
-
-[node name="BasicAttack" parent="." instance=ExtResource("29_tmv0e")]
-sprite_frames = ExtResource("30_pbfbq")
-animation = &"effect"
-frame = 0
-frame_progress = 0.0
+bravery = SubResource("Resource_krw4x")
+reaction = SubResource("Resource_3mgx5")
+willpower = SubResource("Resource_h05og")
+max_health = SubResource("Resource_fed4r")
+phys_armor_per_turn = SubResource("Resource_4rf15")
+mag_armor_per_turn = SubResource("Resource_0jxdr")
+physical_power = SubResource("Resource_mi3fp")
+magical_power = SubResource("Resource_mjk8s")
 
 [connection signal="gui_input" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_gui_input"]
-[connection signal="canceled" from="UI/InventoryInterface/ConfirmDrop" to="UI/InventoryInterface" method="_on_confirmation_dialog_canceled"]
-[connection signal="confirmed" from="UI/InventoryInterface/ConfirmDrop" to="UI/InventoryInterface" method="_on_confirmation_dialog_confirmed"]
+[connection signal="canceled" from="UI/ConfirmDrop" to="UI/InventoryInterface" method="_on_confirmation_dialog_canceled"]
+[connection signal="confirmed" from="UI/ConfirmDrop" to="UI/InventoryInterface" method="_on_confirmation_dialog_confirmed"]

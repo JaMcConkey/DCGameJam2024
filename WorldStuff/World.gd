@@ -37,7 +37,7 @@ func handle_tile_enter(cell_entered : Cell):
 		#handle_event(cell_entered,event)
 	#Right now my thought is for cell_entered to trigger things liek ground damage
 	# scratch that, going to make it all events cell_entered.on_player_enter(player_pawn)
-	pass
+
 
 func generate_map():
 	var tilemap = map.get_used_cells(0)

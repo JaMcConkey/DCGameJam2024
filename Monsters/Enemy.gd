@@ -2,15 +2,19 @@ extends Resource
 class_name Enemy
 
 signal enemy_updated(enemy: Enemy)
+signal took_damage(enemy : Enemy)
 signal enemy_killed(enemy : Enemy)
 
 @export var enemy_name : String
 @export var enemy_image : Texture
 
 @export var max_health : float
+@export var enemy_actions : Array[EnemyAction]
 var current_health : float
 var physical_armor : float
 var magic_armor : float
+
+var assigned_slot : CombatSlot
 
 func init_enemy():
 	current_health = max_health
@@ -46,3 +50,8 @@ func _take_magic_damage(amount: int) -> void:
 		_take_health_damage(-magic_armor)
 		magic_armor = 0
 		enemy_updated.emit(self)
+		
+func get_enemy_intent() -> void:
+	pass
+func get_enemy_action() -> EnemyAction:
+	return enemy_actions[0]

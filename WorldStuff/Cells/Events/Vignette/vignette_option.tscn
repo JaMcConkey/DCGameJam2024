@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://cihycsqbma6tl"]
+
+[ext_resource type="Script" path="res://WorldStuff/Cells/Events/Vignette/VignetteOption.gd" id="1_hualr"]
+
+[node name="VignetteOption" type="Panel" node_paths=PackedStringArray("button")]
+custom_minimum_size = Vector2(180, 60)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_hualr")
+button = NodePath("Containter/Button")
+
+[node name="Containter" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="Containter"]
+layout_mode = 2
+text = "KEEP IT SHORT"
+text_overrun_behavior = 4
+
+[node name="RewardText" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_top = 55.0
+offset_right = 181.0
+offset_bottom = 189.0
+bbcode_enabled = true
+text = "This is the reward description"
+
+[connection signal="pressed" from="Containter/Button" to="." method="_on_button_pressed"]

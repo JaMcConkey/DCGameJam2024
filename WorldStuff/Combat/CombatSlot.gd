@@ -9,6 +9,7 @@ extends Control
 @export var name_label : RichTextLabel
 @export var monster_info_main : Control
 @export var anim : AnimatedSprite2D
+@export var anim_player : AnimationPlayer
 
 @onready var mag_armor = $MonsterInfo/HealthBar/MagArmor
 @onready var mag_amount = $MonsterInfo/HealthBar/MagArmor/MagAmount
@@ -17,7 +18,7 @@ extends Control
 @onready var phy_amount = $MonsterInfo/HealthBar/PhyArmor/PhyAmount
 
 var pos : Vector2i
-var monster : Enemy# Will be for the monster - Going to static type later
+var monster : Enemy
 
 signal on_mouse_over(CombatSlot)
 signal on_mouse_leave(CombatSlot)
@@ -29,16 +30,28 @@ func assign_monster(enemy : Enemy):
 	if monster !=null:
 		monster.enemy_updated.disconnect(update_slot_ui)
 		monster.enemy_killed.disconnect(remove_monster)
+		monster.took_damage.disconnect(flash_hit)
+		monster.assigned_slot = null
 	if enemy != null:
 		enemy.enemy_updated.connect(update_slot_ui)
 		enemy.enemy_killed.connect(remove_monster)
+		enemy.took_damage.connect(flash_hit)
+		enemy.assigned_slot = self
 	monster = enemy
 	update_slot_ui(enemy)
+
+func flash_hit(enemy_hit : Enemy):
+	anim_player.play("get_hit")
 
 func remove_monster(enemy_to_remove : Enemy):
 	if monster == null:
 		return
+	monster.enemy_updated.disconnect(update_slot_ui)
+	monster.enemy_killed.disconnect(remove_monster)
+	monster.took_damage.disconnect(flash_hit)
+	monster.assigned_slot = null
 	monster = null
+	update_slot_ui(null)
 
 
 func update_slot_ui(enemy : Enemy):

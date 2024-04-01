@@ -5,7 +5,7 @@ var player_pawn : PlayerPawn
 
 var can_move : bool = true
 var can_rotate : bool = true
-var can_change_equipment : bool = false
+var can_change_equipment : bool = true
 
 
 func use_slot_data(slot_data : InventorySlotData):
@@ -25,4 +25,4 @@ func _input(event):
 			player_pawn.move_forward()
 			return
 	if event.is_action_released("TEST"):
-		World.instance.place_player_in_cell(World.instance.cells.pick_random())
+		player.player_action_manager.update_ap()

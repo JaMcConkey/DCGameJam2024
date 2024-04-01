@@ -1,12 +1,36 @@
-[gd_resource type="Resource" script_class="EquipItemData" load_steps=4 format=3 uid="uid://df2hdk4vvrca3"]
+[gd_resource type="Resource" script_class="EquipItemData" load_steps=10 format=3 uid="uid://df2hdk4vvrca3"]
 
 [ext_resource type="Resource" uid="uid://cac6qef1ptkyl" path="res://Inventory/EquipSlots/Helm.tres" id="1_uikc2"]
 [ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="2_8kc4b"]
 [ext_resource type="Script" path="res://Inventory/equip_item_data.gd" id="3_g8tfd"]
+[ext_resource type="Script" path="res://UnitStuff/StatModifier.gd" id="4_fbf0q"]
+[ext_resource type="Script" path="res://PlayerStatMod.gd" id="5_5l2hw"]
+
+[sub_resource type="Resource" id="Resource_6kvbt"]
+script = ExtResource("4_fbf0q")
+add_amount = 5
+multiplier = 0
+
+[sub_resource type="Resource" id="Resource_ci4t1"]
+script = ExtResource("4_fbf0q")
+add_amount = 1
+multiplier = 0
+
+[sub_resource type="Resource" id="Resource_ed7lh"]
+script = ExtResource("4_fbf0q")
+add_amount = 3
+multiplier = 0
+
+[sub_resource type="Resource" id="Resource_kpama"]
+script = ExtResource("5_5l2hw")
+bravery_mod = SubResource("Resource_6kvbt")
+reaction_mod = SubResource("Resource_ed7lh")
+phys_armor_per_turn_mod = SubResource("Resource_ci4t1")
 
 [resource]
 script = ExtResource("3_g8tfd")
 equip_slot_type = ExtResource("1_uikc2")
+stat_modifier = SubResource("Resource_kpama")
 item_name = "Simple Helm"
 description = ""
 stackable = false

@@ -9,10 +9,9 @@ class_name PlayerDamageEffect
 func apply_to_slot(slot : CombatSlot) -> void:
 	var monster : Enemy
 	monster = slot.monster
-	if not monster:
-		return
+	if monster:
+		monster.take_damage(damage_effect)
 	#NOTE: Later will call Player.GetDamageMods on this
-	monster.take_damage(damage_effect)
 	#For now using Animated sprite 2d for an animation
 	slot.play_anim(anim_sprites)
 	#if monster:

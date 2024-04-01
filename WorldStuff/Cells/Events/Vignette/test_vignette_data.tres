@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="VignetteData" load_steps=8 format=3 uid="uid://vcto8lr1ibd7"]
+
+[ext_resource type="Script" path="res://WorldStuff/Cells/Events/Vignette/VignetteOptionData.gd" id="1_17bh7"]
+[ext_resource type="Script" path="res://WorldStuff/Cells/Events/EventReward.gd" id="1_k0ntu"]
+[ext_resource type="Script" path="res://WorldStuff/Cells/Events/Vignette/VignetteData.gd" id="1_xfjgh"]
+
+[sub_resource type="Resource" id="Resource_e8tl7"]
+script = ExtResource("1_k0ntu")
+experience_gain = 0
+items_gained = Array[Resource("res://Inventory/item_data.gd")]([])
+
+[sub_resource type="Resource" id="Resource_jdnaf"]
+script = ExtResource("1_17bh7")
+bravery_req = 0
+reaction_req = 0
+willpower_req = 0
+label_description = "Slap the fuckos"
+reward = SubResource("Resource_e8tl7")
+
+[sub_resource type="Resource" id="Resource_r2mmh"]
+script = ExtResource("1_k0ntu")
+experience_gain = 0
+items_gained = Array[Resource("res://Inventory/item_data.gd")]([])
+
+[sub_resource type="Resource" id="Resource_1hkuf"]
+script = ExtResource("1_17bh7")
+bravery_req = 0
+reaction_req = 0
+willpower_req = 0
+label_description = "Run from the fucko"
+reward = SubResource("Resource_r2mmh")
+
+[resource]
+script = ExtResource("1_xfjgh")
+description_of_event = "Some fuckos are around"
+options = Array[ExtResource("1_17bh7")]([SubResource("Resource_jdnaf"), SubResource("Resource_1hkuf")])

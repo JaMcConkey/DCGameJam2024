@@ -16,25 +16,25 @@ func is_valid_slot(selected_slot : CombatSlot, grid_array : Array[CombatSlot]):
 	var hittable_rows = []  
 	
 	for slot in grid_array:
-		if slot.pos.y == 0 and slot.monster != null:
+		if slot.pos.y == 2 and slot.monster != null:
 			first_row_empty = false
 		elif slot.pos.y == 1 and slot.monster != null:
 			second_row_empty = false
-	#Now we'll add hittable rows 0 (Front is always hittable)
-	hittable_rows.append(0)
+	#Now we'll add hittable rows 2 (Front is always hittable)
+	hittable_rows.append(2)
 	match range_type:
 		RANGE.Close:
 			if first_row_empty:
 				hittable_rows.append(1)
 			if second_row_empty:
-				hittable_rows.append(2)
+				hittable_rows.append(0)
 		RANGE.Medium:
 			if first_row_empty:
-				hittable_rows.append(1)
 				hittable_rows.append(2)
+				hittable_rows.append(1)
 		RANGE.Long:
+			hittable_rows.append(0)
 			hittable_rows.append(1)
-			hittable_rows.append(2)
 	if hittable_rows.has(selected_slot.pos.y):
 		return true
 	else:

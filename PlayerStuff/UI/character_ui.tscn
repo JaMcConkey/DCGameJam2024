@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://1hm25sspnfju"]
+[gd_scene load_steps=7 format=3 uid="uid://1hm25sspnfju"]
 
+[ext_resource type="Script" path="res://PlayerStuff/UI/character_ui.gd" id="1_5lmgv"]
 [ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="1_sbqu5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gna6j"]
@@ -14,7 +15,7 @@ bg_color = Color(0.593255, 0.51, 1, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kl5mq"]
 bg_color = Color(1, 1, 0, 1)
 
-[node name="CharacterUI" type="Panel"]
+[node name="CharacterPanelUI" type="Panel"]
 custom_minimum_size = Vector2(462, 1080)
 anchors_preset = 1
 anchor_left = 1.0
@@ -22,6 +23,8 @@ anchor_right = 1.0
 offset_left = -462.0
 offset_bottom = 1080.0
 grow_horizontal = 0
+mouse_filter = 1
+script = ExtResource("1_5lmgv")
 
 [node name="Portrait" type="TextureRect" parent="."]
 layout_mode = 1
@@ -44,6 +47,7 @@ offset_left = -59.0
 offset_right = 61.0
 offset_bottom = 69.0
 grow_horizontal = 2
+mouse_filter = 1
 bbcode_enabled = true
 text = "[center]James
 Paladin - 5[/center]"
@@ -56,6 +60,7 @@ anchor_right = 1.0
 offset_top = 192.0
 offset_bottom = 192.0
 grow_horizontal = 2
+mouse_filter = 1
 bbcode_enabled = true
 text = "[center]Health[/center]"
 fit_content = true
@@ -74,9 +79,10 @@ offset_right = 75.0
 offset_bottom = -295.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_styles/background = SubResource("StyleBoxFlat_gna6j")
 theme_override_styles/fill = SubResource("StyleBoxFlat_eh86f")
-value = 50.0
+value = 25.0
 
 [node name="Sanity" type="RichTextLabel" parent="."]
 layout_mode = 1
@@ -85,6 +91,7 @@ anchor_right = 1.0
 offset_top = 246.0
 offset_bottom = 269.0
 grow_horizontal = 2
+mouse_filter = 1
 bbcode_enabled = true
 text = "[center]Sanity[/center]"
 fit_content = true
@@ -103,12 +110,12 @@ offset_right = 75.0
 offset_bottom = -242.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_styles/background = SubResource("StyleBoxFlat_24ta0")
 theme_override_styles/fill = SubResource("StyleBoxFlat_kl5mq")
 value = 50.0
 
 [node name="Stats" type="Panel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -118,6 +125,7 @@ offset_top = -219.0
 offset_bottom = 74.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Stats"]
 layout_mode = 1
@@ -127,17 +135,154 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
-text = "Stats stuff going here
-STR: 55555
-DEX:4444
-INT: 333
 
+[node name="MainStats" type="Control" parent="Stats"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[center] ACTION POOL [/center]
-OFFENSIVE : OOX
-DEFENSIVE: OO
-ADAPTRIVE: X
-"
+[node name="BraveryLabel" type="Label" parent="Stats/MainStats"]
+layout_mode = 2
+offset_top = 7.0
+offset_right = 61.0
+offset_bottom = 30.0
+text = "Bravery"
+
+[node name="BraveryText" type="Panel" parent="Stats/MainStats/BraveryLabel"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = -5.0
+offset_right = 123.0
+offset_bottom = 35.0
+
+[node name="BraveryValue" type="Label" parent="Stats/MainStats/BraveryLabel/BraveryText"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="ReactionLabel" type="Label" parent="Stats/MainStats"]
+layout_mode = 2
+offset_top = 49.0
+offset_right = 61.0
+offset_bottom = 72.0
+text = "Reaction"
+
+[node name="ReactionText" type="Panel" parent="Stats/MainStats/ReactionLabel"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = -5.0
+offset_right = 123.0
+offset_bottom = 35.0
+
+[node name="ReactValue" type="Label" parent="Stats/MainStats/ReactionLabel/ReactionText"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="WillPowerLabel" type="Label" parent="Stats/MainStats"]
+layout_mode = 2
+offset_top = 92.0
+offset_right = 68.0
+offset_bottom = 115.0
+text = "WillPower"
+
+[node name="WillpowerText" type="Panel" parent="Stats/MainStats/WillPowerLabel"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = -5.0
+offset_right = 123.0
+offset_bottom = 35.0
+
+[node name="WillValue" type="Label" parent="Stats/MainStats/WillPowerLabel/WillpowerText"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="PhysPower" type="Label" parent="Stats/MainStats"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 130.0
+offset_right = 55.0
+offset_bottom = 153.0
+text = "PHY"
+
+[node name="Panel" type="Panel" parent="Stats/MainStats/PhysPower"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = 19.0
+offset_right = -4.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PhysPowValue" type="Label" parent="Stats/MainStats/PhysPower/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "555"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MagPower" type="Label" parent="Stats/MainStats"]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 130.0
+offset_right = 122.0
+offset_bottom = 153.0
+text = "MAG"
+
+[node name="Panel2" type="Panel" parent="Stats/MainStats/MagPower"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = 20.0
+offset_right = -2.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MagPowValue" type="Label" parent="Stats/MainStats/MagPower/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "555"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Actions" type="Panel" parent="."]
 layout_mode = 1
@@ -145,9 +290,10 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -415.0
+offset_top = -262.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Actions"]
 layout_mode = 1
@@ -155,8 +301,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -236.5
-offset_bottom = -213.5
+offset_top = -292.0
+offset_bottom = -269.0
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
@@ -164,7 +310,22 @@ text = "[center]Actions[/center]
 "
 fit_content = true
 
+[node name="Label" type="Label" parent="Actions"]
+layout_mode = 0
+offset_top = -98.0
+offset_right = 40.0
+offset_bottom = -75.0
+text = "PHYSICAL ACTIONS: 
+ "
+
+[node name="Value" type="Label" parent="Actions/Label"]
+layout_mode = 0
+offset_top = 20.0
+offset_right = 40.0
+offset_bottom = 43.0
+
 [node name="EquipmentTab" type="PanelContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -177,3 +338,4 @@ offset_right = 229.0
 offset_bottom = 111.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1

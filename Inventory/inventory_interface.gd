@@ -11,7 +11,7 @@ static var instance : InventoryInterface
 @onready var inventory_interface = $"."
 @onready var player_inventory = $PlayerInventory
 @onready var external_invntory = $ExternalInvntory
-@onready var confirm_drop = $ConfirmDrop
+@onready var confirm_drop = $"../ConfirmDrop"
 
 
 

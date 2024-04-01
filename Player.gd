@@ -5,14 +5,18 @@ signal toggle_inventory
 @export var inventory_data : InventoryData
 @export var equip_inventory_data : Array[EquipInventoryData]
 @onready var sanity_manager = $SanityManager
-@onready var player_action_manager = $PlayerActionManager
-@onready var stats = $PlayerStats
+@onready var player_action_manager : PlayerActionManager = $PlayerActionManager
+@onready var stats : PlayerStats = $PlayerStats
 
 func _ready():
 	PlayerManager.player = self
 	InventoryInterface.instance.init_player_inventory()
+	stats.init_player_stats()
+	player_action_manager.init_action_manager()
+	$"../UI/CharacterUI".init_player_ui()
 
 func take_damage(damage : Damage):
+	stats.take_damage(damage)
 	pass
 
 
@@ -30,3 +34,4 @@ func heal(amount: int ) -> void:
 	pass
 func learn_action(player_action : PlayerAction):
 	player_action_manager.add_action(player_action)
+
