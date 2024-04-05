@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://1hm25sspnfju"]
+[gd_scene load_steps=10 format=3 uid="uid://1hm25sspnfju"]
 
 [ext_resource type="Script" path="res://PlayerStuff/UI/character_ui.gd" id="1_5lmgv"]
 [ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="1_sbqu5"]
+[ext_resource type="Texture2D" uid="uid://m0pucyrt30os" path="res://Art/#1 - Transparent Icons.png" id="3_enuun"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gna6j"]
 bg_color = Color(0.779982, 0, 0.195866, 1)
@@ -15,16 +16,28 @@ bg_color = Color(0.593255, 0.51, 1, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kl5mq"]
 bg_color = Color(1, 1, 0, 1)
 
-[node name="CharacterPanelUI" type="Panel"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_pfvch"]
+resource_local_to_scene = true
+atlas = ExtResource("3_enuun")
+region = Rect2(290.264, 164.454, 28.0036, 25.9545)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3a4rx"]
+atlas = ExtResource("3_enuun")
+region = Rect2(1.95322, 194.458, 27.9415, 27.3205)
+
+[node name="CharacterPanelUI" type="Control" node_paths=PackedStringArray("phys_ico", "def_ico")]
 custom_minimum_size = Vector2(462, 1080)
+layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -462.0
 offset_bottom = 1080.0
 grow_horizontal = 0
-mouse_filter = 1
+mouse_filter = 2
 script = ExtResource("1_5lmgv")
+phys_ico = NodePath("Icons/PhysIco")
+def_ico = NodePath("Icons/DefIco")
 
 [node name="Portrait" type="TextureRect" parent="."]
 layout_mode = 1
@@ -290,10 +303,10 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -262.0
+offset_top = -389.0
 grow_horizontal = 2
 grow_vertical = 0
-mouse_filter = 1
+mouse_filter = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Actions"]
 layout_mode = 1
@@ -301,8 +314,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -292.0
-offset_bottom = -269.0
+offset_top = -270.5
+offset_bottom = -247.5
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
@@ -310,32 +323,54 @@ text = "[center]Actions[/center]
 "
 fit_content = true
 
-[node name="Label" type="Label" parent="Actions"]
+[node name="ActionHolder" type="VBoxContainer" parent="Actions"]
 layout_mode = 0
-offset_top = -98.0
-offset_right = 40.0
-offset_bottom = -75.0
-text = "PHYSICAL ACTIONS: 
- "
+offset_right = 460.0
+offset_bottom = 259.0
+mouse_filter = 2
 
-[node name="Value" type="Label" parent="Actions/Label"]
-layout_mode = 0
-offset_top = 20.0
-offset_right = 40.0
-offset_bottom = 43.0
-
-[node name="EquipmentTab" type="PanelContainer" parent="."]
-visible = false
+[node name="PhysActions" type="HBoxContainer" parent="Actions"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -228.0
-offset_top = -232.0
-offset_right = 229.0
-offset_bottom = 111.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -48.0
+offset_right = -271.0
+offset_bottom = -403.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
+
+[node name="DefActions" type="HBoxContainer" parent="Actions"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 274.0
+offset_top = -48.0
+offset_right = -1.0
+offset_bottom = -403.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Icons" type="Node" parent="."]
+
+[node name="PhysIco" type="TextureRect" parent="Icons"]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+offset_left = 1462.0
+offset_top = 643.0
+offset_right = 1494.0
+offset_bottom = 677.0
+texture = SubResource("AtlasTexture_pfvch")
+expand_mode = 1
+
+[node name="DefIco" type="TextureRect" parent="Icons"]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+offset_left = 1524.0
+offset_top = 642.0
+offset_right = 1556.0
+offset_bottom = 676.0
+texture = SubResource("AtlasTexture_3a4rx")
+expand_mode = 1

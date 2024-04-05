@@ -24,8 +24,7 @@ func _ready():
 			#player_pawn = node
 			#player_pawn.entered_new_cell.connect(handle_tile_enter)
 	generate_map()
-	var random_cell = randi() % cells.size()
-	place_player_in_cell(cells.pick_random())
+
 	#player_pawn.entered_new_cell.connect(handle_tile_enter)
 
 #NOTE: This is emitted everytime a player enters a cell, we'll check for events
@@ -57,7 +56,7 @@ func generate_map():
 			print("ERROR: No cell data added, using default data")
 			cell.init_cell(test_cell_data)
 		
-		if randf() < 0.25:
+		if randf() < 0.15:
 			cell.add_event(text_cell_event)
 	#
 	# Create a dictionary to map positions to cells for easy lookup

@@ -1,8 +1,20 @@
-[gd_scene load_steps=13 format=3 uid="uid://sd2k112rexxb"]
+[gd_scene load_steps=14 format=3 uid="uid://sd2k112rexxb"]
 
 [ext_resource type="Script" path="res://WorldStuff/Combat/CombatSlot.gd" id="1_fvn7s"]
 [ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="2_43003"]
 [ext_resource type="Shader" path="res://WorldStuff/Combat/combat_slot_shader.gdshader" id="2_bgi6m"]
+[ext_resource type="Texture2D" uid="uid://c8cut7lv3y8gm" path="res://Art/redX.png" id="4_78i7v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b04sa"]
+resource_local_to_scene = true
+shader = ExtResource("2_bgi6m")
+shader_parameter/active = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16a1c"]
+bg_color = Color(0.914186, 0.416555, 0.489504, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n5frp"]
+bg_color = Color(0, 0.716212, 0.39694, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_37ifj"]
 draw_center = false
@@ -20,19 +32,7 @@ border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.862745, 1, 0.109804, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_b04sa"]
-shader = ExtResource("2_bgi6m")
-shader_parameter/active = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16a1c"]
-bg_color = Color(0.914186, 0.416555, 0.489504, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n5frp"]
-bg_color = Color(0, 0.716212, 0.39694, 1)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_xakcv"]
-
-[sub_resource type="Animation" id="Animation_nnm44"]
+[sub_resource type="Animation" id="Animation_q8idd"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -46,10 +46,38 @@ tracks/0/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MonsterInfo/Portrait:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(128, 32)]
+}
 
-[sub_resource type="Animation" id="Animation_w5vfn"]
+[sub_resource type="Animation" id="Animation_nldhj"]
+resource_name = "attack"
+length = 0.75
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MonsterInfo/Portrait:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(128, 32), Vector2(128, 53.95), Vector2(128, 32)]
+}
+
+[sub_resource type="Animation" id="Animation_vm7hf"]
 resource_name = "get_hit"
-length = 0.2
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -57,19 +85,20 @@ tracks/0/path = NodePath("MonsterInfo/Portrait:material:shader_parameter/active"
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.1, 0.2),
+"times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_emknp"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d2pi2"]
 _data = {
-"RESET": SubResource("Animation_nnm44"),
-"get_hit": SubResource("Animation_w5vfn")
+"RESET": SubResource("Animation_q8idd"),
+"attack": SubResource("Animation_nldhj"),
+"get_hit": SubResource("Animation_vm7hf")
 }
 
-[node name="CombatSlot" type="Control" node_paths=PackedStringArray("highlight_panel", "show_effected_panel", "monster_picture", "health_bar", "health_label", "name_label", "monster_info_main", "anim")]
+[node name="CombatSlot" type="Control" node_paths=PackedStringArray("highlight_panel", "show_effected_panel", "invalid_panel", "monster_picture", "health_bar", "health_label", "name_label", "monster_info_main", "anim_player")]
 custom_minimum_size = Vector2(384, 256)
 layout_mode = 3
 anchors_preset = 15
@@ -80,14 +109,15 @@ offset_bottom = -824.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fvn7s")
-highlight_panel = NodePath("Panel/Highlight")
-show_effected_panel = NodePath("Panel/ShowEffected")
+highlight_panel = NodePath("Control/Highlight")
+show_effected_panel = NodePath("Control/ShowEffected")
+invalid_panel = NodePath("Control/InvalidTarget")
 monster_picture = NodePath("MonsterInfo/Portrait")
 health_bar = NodePath("MonsterInfo/HealthBar")
 health_label = NodePath("MonsterInfo/HealthBar/HealthLabel")
 name_label = NodePath("MonsterInfo/Name")
 monster_info_main = NodePath("MonsterInfo")
-anim = NodePath("AnimSprite")
+anim_player = NodePath("AnimationPlayer")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -96,44 +126,24 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-
-[node name="ShowEffected" type="Panel" parent="Panel"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_37ifj")
-
-[node name="Highlight" type="Panel" parent="Panel"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_1iowt")
 
 [node name="MonsterInfo" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Portrait" type="TextureRect" parent="MonsterInfo"]
 material = SubResource("ShaderMaterial_b04sa")
 layout_mode = 2
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 108.0
-offset_top = 24.0
-offset_right = 236.0
-offset_bottom = 152.0
+offset_left = 128.0
+offset_top = 32.0
+offset_right = 256.0
+offset_bottom = 160.0
 grow_horizontal = 2
 mouse_filter = 2
 texture = ExtResource("2_43003")
@@ -142,9 +152,10 @@ texture = ExtResource("2_43003")
 layout_mode = 2
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 108.0
-offset_right = 236.0
-offset_bottom = 24.0
+offset_left = -64.0
+offset_top = 8.0
+offset_right = 64.0
+offset_bottom = 32.0
 grow_horizontal = 2
 mouse_filter = 2
 bbcode_enabled = true
@@ -157,10 +168,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 116.0
-offset_top = 112.0
-offset_right = 228.0
-offset_bottom = 139.0
+offset_left = -56.0
+offset_top = -88.0
+offset_right = 56.0
+offset_bottom = -61.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/background = SubResource("StyleBoxFlat_16a1c")
@@ -232,15 +243,74 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AnimSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(192, 80)
-sprite_frames = SubResource("SpriteFrames_xakcv")
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ShowEffected" type="Panel" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_37ifj")
+
+[node name="Highlight" type="Panel" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1iowt")
+
+[node name="InvalidTarget" type="TextureRect" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_78i7v")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Control/InvalidTarget"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -63.5
+offset_top = -23.0
+offset_right = 63.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "INVALID TARGET"
+
+[node name="HoverArea" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_emknp")
+"": SubResource("AnimationLibrary_d2pi2")
 }
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
-[connection signal="animation_looped" from="AnimSprite" to="." method="_on_anim_sprite_animation_looped"]
+[connection signal="mouse_entered" from="HoverArea" to="." method="_on_hover_area_mouse_entered"]
+[connection signal="mouse_exited" from="HoverArea" to="." method="_on_hover_area_mouse_exited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

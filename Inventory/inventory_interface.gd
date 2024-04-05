@@ -28,7 +28,7 @@ func init_player_inventory():
 		print("NO PLAYER")
 		return
 	set_player_inventory_data(player.inventory_data)
-	$EquipInventory.init_equip_inventory()
+	$"../EquipInventory".init_equip_inventory()
 	for equip_slot in player.equip_inventory_data:
 		equip_slot.inventory_interact.connect(on_inventory_interact)
 	player.toggle_inventory.connect(toggle_inventory_interface)
@@ -93,8 +93,6 @@ func _on_gui_input(event):
 				grabbed_slot_data.item_data.item_name + " ?"
 				confirm_drop.show()
 
-
-	pass # Replace with function body.
 
 
 #On confirm, drop

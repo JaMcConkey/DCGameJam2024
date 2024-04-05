@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://mq72thti2c6q"]
+
+[ext_resource type="Script" path="res://Inventory/Draggable.gd" id="1_7s464"]
+
+[node name="Draggable" type="PanelContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 20)
+layout_direction = 1
+offset_right = 25.0
+offset_bottom = 20.0
+size_flags_horizontal = 3
+script = ExtResource("1_7s464")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

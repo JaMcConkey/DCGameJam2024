@@ -1,0 +1,108 @@
+[gd_scene load_steps=7 format=3 uid="uid://mmkgagqq78hs"]
+
+[ext_resource type="Script" path="res://action_slot.gd" id="1_1beb4"]
+[ext_resource type="Texture2D" uid="uid://m0pucyrt30os" path="res://Art/#1 - Transparent Icons.png" id="1_tjdmq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7p7ne"]
+atlas = ExtResource("1_tjdmq")
+region = Rect2(0.288559, 158.909, 30.7723, 35.4665)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y8ea0"]
+atlas = SubResource("AtlasTexture_7p7ne")
+region = Rect2(-0.77124, -0.964081, 30.4579, 36.2411)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0pj8q"]
+resource_local_to_scene = true
+atlas = ExtResource("1_tjdmq")
+region = Rect2(0, 192.096, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wh2lk"]
+atlas = ExtResource("1_tjdmq")
+region = Rect2(191.585, 66.5557, 29.8043, 27.9415)
+
+[node name="ActionSlot" type="Control"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 432.0
+offset_bottom = 40.0
+script = ExtResource("1_1beb4")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ActionName" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 1.0
+grow_vertical = 2
+text = "Name of the Action"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -186.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Cost" type="PanelContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CostIcon" type="TextureRect" parent="HBoxContainer/Cost"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_y8ea0")
+
+[node name="OffCost" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "x5"
+
+[node name="Cost2" type="PanelContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CostIcon" type="TextureRect" parent="HBoxContainer/Cost2"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_0pj8q")
+
+[node name="DefCost" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "x5"
+
+[node name="Cost4" type="PanelContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CostIcon" type="TextureRect" parent="HBoxContainer/Cost4"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_wh2lk")
+
+[node name="CD" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "3"
+
+[node name="CDLeft" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "READY IN "
+vertical_alignment = 1
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

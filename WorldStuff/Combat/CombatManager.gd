@@ -24,6 +24,9 @@ var in_combat : bool
 var turn_order : Array = []
 var cur_turn_index : int = -1 #Start at -1 so first turn goes to player
 var player_turn : bool
+var active_enemy : Enemy
+
+#NOTE: Recurssion is happening when the event starts before player is set in manager
 func create_turn_order():
 	turn_order.clear()
 	cur_turn_index = -1
@@ -35,30 +38,46 @@ func create_turn_order():
 			turn_order.append(slot.monster)
 
 func remove_from_turn_order(enemy_to_remove : Enemy):
-	turn_order.erase(enemy_to_remove)
+	for i in range(turn_order.size()):
+		if turn_order[i] == enemy_to_remove:
+			turn_order.remove_at(i)
+			break
+	if enemy_to_remove == null:
+		print("Removed null enemy from turn order.")
 
 func next_turn():
 	cur_turn_index += 1
 	if cur_turn_index >= turn_order.size():
 		cur_turn_index = 0
 	var combatant_check = turn_order[cur_turn_index]
+	#NOTE: This check was to stop recurssion when combat started before inits 
+	#Should'nt be a problem later - Player should always be pos 0
+	if cur_turn_index == 0 and combatant_check == null:
+		turn_order[0] = PlayerManager.player
 	if combatant_check == PlayerManager.player:
+		PlayerManager.fill_ap()
 		player_turn = true
 	elif combatant_check == null:
 		print("COMBATANT WASNT REMOVED? SKIPPING TUYRN")
 		next_turn()
 	else:
 		player_turn = false
+		active_enemy = turn_order[cur_turn_index]
 		do_enemy_action(combatant_check)
 		#Do enemy actions
 
 func do_enemy_action(enemy : Enemy):
 	#Will get one at random later, for now we'll do the first
 	#NOTE: Right now i'm assigning a slot, will fix this layer
-	var enemy_action = enemy.get_enemy_action()
-	enemy_action.do_action(enemy.assigned_slot)
+	active_enemy.assigned_slot.anim_done.connect(end_enemy_action)
+	active_enemy.assigned_slot.play_attack_anim()
+
+
+func end_enemy_action():
+	var enemy_action = active_enemy.get_enemy_action()
+	enemy_action.do_action(active_enemy.assigned_slot)
+	active_enemy.assigned_slot.anim_done.disconnect(end_enemy_action)
 	next_turn()
-	pass
 
 func _ready():
 	if instance == null:
@@ -85,17 +104,17 @@ func init_grid():
 		slot.assign_monster(null)
 
 func handle_mouse_over(slot : CombatSlot):
-	slot.toggle_highlight(true)
+	#slot.toggle_highlight(true)
 	hovered_slot = slot
-	if active_player_action.targeting.is_valid_slot(hovered_slot,grid):
-		print("HOVERED SLOT IS VALID")
-	if active_player_action \
-	 and active_player_action.targeting.is_valid_slot(hovered_slot,grid):
-		slot.toggle_highlight(true)
-		clear_effected()
-		for new_slot in active_player_action.targeting.get_effected_slots(slot,grid):
-			new_slot.toggle_effected(true)
-			effected_slots.append(new_slot)
+	if active_player_action:
+		if active_player_action.targeting.is_valid_slot(hovered_slot,grid):
+			slot.toggle_highlight(true)
+			clear_effected()
+			for new_slot in active_player_action.targeting.get_effected_slots(slot,grid):
+				new_slot.toggle_effected(true)
+				effected_slots.append(new_slot)
+		else:
+			slot.toggle_invalid(true)
 	pass
 
 func clear_effected():
@@ -106,6 +125,7 @@ func clear_effected():
 func handle_mouse_leave(slot : CombatSlot):
 	hovered_slot = null
 	slot.toggle_highlight(false)
+	slot.toggle_invalid(false)
 	clear_effected()
 	pass
 func make_row(holder, row_number):
@@ -131,6 +151,7 @@ func start_combat(combat_data : EnemyCombatData):
 				grid[data.slot].assign_monster(enemy)
 	in_combat = true
 	create_turn_order()
+	PlayerManager.fill_ap()
 	next_turn()
 
 func end_combat():
@@ -157,10 +178,11 @@ func resolve_player_action(action : PlayerAction,cast_slot : CombatSlot):
 
 func end_resolve_player_action():
 	processing_action.end_resolve.disconnect(end_resolve_player_action)
+	PlayerManager.consume_action_ap(processing_action)
 	processing_action = null
 	resolving_action = false
-	#FOR NOW GETTING NEXT TURN AFTER AN ACTION
-	next_turn()
+	active_player_action = null
+
 func check_win() -> bool:
 	for cell in grid:
 		if cell.monster != null:
@@ -169,10 +191,16 @@ func check_win() -> bool:
 
 func _physics_process(delta):
 	if active_player_action:
-		$"DEBUG ACTION".text = str(resolving_action)
+		$"DEBUG ACTION".text = str(active_player_action.action_name)
 	else:
 		$"DEBUG ACTION".text = ""
 	if in_combat:
 		if check_win():
 			print("SHOULD END COMBAT HERE")
 			end_combat()
+
+
+func _on_end_turn_button_pressed():
+	if player_turn:
+		next_turn()
+	pass # Replace with function body.

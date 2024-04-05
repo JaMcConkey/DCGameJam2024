@@ -23,6 +23,8 @@ func take_damage(damage : Damage) -> void:
 	_take_physical_damage(damage.phys_damage)
 	_take_magic_damage(damage.mag_damage)
 	_take_health_damage(damage.true_damage)
+	enemy_updated.emit(self)
+	took_damage.emit(self)
 	pass
 
 func _take_health_damage(amount: int) -> void:

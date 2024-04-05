@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dduungrmy6hct"]
+
+[ext_resource type="SpriteFrames" uid="uid://dple0wbwemqwt" path="res://slash_anim.tres" id="1_onn14"]
+[ext_resource type="Script" path="res://PlayerStuff/PlayerActions/EffectVFX/EffectVFX.gd" id="2_ft3ho"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+sprite_frames = ExtResource("1_onn14")
+animation = &"effect"
+frame_progress = 0.400107
+script = ExtResource("2_ft3ho")
+
+[connection signal="animation_looped" from="." to="." method="_on_animation_looped"]

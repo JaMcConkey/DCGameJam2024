@@ -3,13 +3,18 @@ class_name PlayerAction
 
 signal start_resolve
 signal end_resolve
+signal action_updated
 
 @export var action_name : String = "NEW ACTION"
 @export var offensive_point_cost : int
 @export var defensive_point_cost : int
+@export var cooldown : int
 @export var use_weapon_targeting : bool
 @export var targeting : GridTargeting
 @export var player_action_effects : Array[PlayerActionEffect]
+@export var combat_action : bool = true
+
+var remaining_cd = cooldown
 
 var current_effect_index := -1
 var effected_slots := []
@@ -32,6 +37,8 @@ func apply_next_effect():
 		for slot in effected_slots:
 			effect.apply_to_slot(slot)
 	else:
+		remaining_cd = cooldown
+		action_updated.emit()
 		end_resolve.emit()
 
 func _on_effect_resolved():
@@ -45,3 +52,9 @@ func _on_effect_resolved_completed():
 	else:
 		# Apply the next effect
 		apply_next_effect()
+
+func decrease_cur_cd(amount : int):
+	remaining_cd -= amount
+	if remaining_cd < 0:
+		remaining_cd = 0
+	action_updated.emit()

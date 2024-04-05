@@ -61,7 +61,7 @@ func _take_health_damage(amount: int) -> void:
 	current_health -= amount
 	if current_health <= 0:
 		current_health = 0
-		PlayerStatsUpdated.emit(self)
+		#PlayerStatsUpdated.emit(self)
 
 func _take_physical_damage(amount: int) -> void:
 	# Reduce armor by damage amount
@@ -70,7 +70,7 @@ func _take_physical_damage(amount: int) -> void:
 	if physical_armor < 0:
 		_take_health_damage(-physical_armor)
 		physical_armor = 0
-	PlayerStatsUpdated.emit(self)
+	#PlayerStatsUpdated.emit(self)
 
 func _take_magic_damage(amount: int) -> void:
 	# Reduce armor by damage amount
@@ -78,7 +78,7 @@ func _take_magic_damage(amount: int) -> void:
 	if magic_armor < 0:
 		_take_health_damage(-magic_armor)
 		magic_armor = 0
-		PlayerStatsUpdated.emit(self)
+	#	PlayerStatsUpdated.emit(self)
 
 #NOTE: MESSY SPAGET FIX LATER
 func apply_stat_modifier(player_stat_mod : PlayerStatMod, source = null):
