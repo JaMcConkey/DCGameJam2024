@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 PlayerManager="*res://PlayerManager.gd"
 EventLog="*res://event_log.tscn"
 EventHandler="*res://event_handler.tscn"
+Enums="*res://enums.gd"
 
 [display]
 

@@ -33,7 +33,7 @@ func _input(event):
 			player_pawn.move_forward()
 			return
 	if event.is_action_pressed("ToggleInventory"):
-		player.toggle_inventory.emit
+		player.toggle_inventory.emit()
 	if event.is_action_released("TEST"):
 		player.player_action_manager.update_ap()
 		player.player_action_manager.add_action(player.test_learn_action)

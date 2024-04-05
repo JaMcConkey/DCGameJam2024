@@ -11,8 +11,3 @@ func _ready():
 func add_text(string : String) -> void:
 	event_text.text += string
 
-
-# Called every frame. 'delta' 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

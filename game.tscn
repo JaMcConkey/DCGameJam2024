@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://bqxxuvy4xijdd"]
+[gd_scene load_steps=87 format=3 uid="uid://bqxxuvy4xijdd"]
 
 [ext_resource type="PackedScene" uid="uid://1hm25sspnfju" path="res://PlayerStuff/UI/character_ui.tscn" id="1_4im0x"]
 [ext_resource type="Script" path="res://Inventory/inventory_interface.gd" id="1_5u8ub"]
@@ -24,18 +24,12 @@
 [ext_resource type="Script" path="res://Player.gd" id="18_x7bm5"]
 [ext_resource type="Script" path="res://WorldStuff/Combat/EnemyCombatData.gd" id="19_8n7hm"]
 [ext_resource type="Script" path="res://Inventory/equipment_inventory_data.gd" id="19_ogwxi"]
-[ext_resource type="Resource" uid="uid://cac6qef1ptkyl" path="res://Inventory/EquipSlots/Helm.tres" id="20_1jn3b"]
 [ext_resource type="Script" path="res://WorldStuff/Combat/EnemySpawnData.gd" id="20_c4fi3"]
-[ext_resource type="Resource" uid="uid://df2hdk4vvrca3" path="res://Inventory/EquipSlots/TESTHELM.tres" id="20_eebsv"]
 [ext_resource type="Script" path="res://WorldStuff/Cells/CombatEvent.gd" id="21_ytyt7"]
 [ext_resource type="Texture2D" uid="uid://ddlnfap8mge78" path="res://Art/Textures/Rocks018_1K-JPG/Rocks018_1K-JPG_Color.jpg" id="22_mqddm"]
-[ext_resource type="Resource" uid="uid://c8j87fpsmal76" path="res://Inventory/EquipSlots/Chest.tres" id="24_ru2qn"]
-[ext_resource type="Resource" uid="uid://dmn0y4e81sww0" path="res://Inventory/EquipSlots/Legs.tres" id="25_dgqdj"]
-[ext_resource type="Script" path="res://Inventory/WeaponItemData.gd" id="25_oy7mm"]
-[ext_resource type="Resource" uid="uid://dfgjw5ewni3xa" path="res://Inventory/EquipSlots/Boots.tres" id="26_mu7wx"]
-[ext_resource type="Resource" uid="uid://2pp6738gb1cm" path="res://Inventory/EquipSlots/Weapon.tres" id="27_8ak8m"]
-[ext_resource type="Texture2D" uid="uid://dilb4byc2p7c3" path="res://Art/Textures/Rock035_1K-JPG/Rock035_1K-JPG_Color.jpg" id="27_ij8ng"]
-[ext_resource type="Resource" uid="uid://cvalb3peg8csf" path="res://Inventory/EquipSlots/Offhand.tres" id="27_jdpds"]
+[ext_resource type="Texture2D" uid="uid://cvtr12pvnfxcq" path="res://Art/Textures/PavingStones009_1K-JPG/PavingStones009_1K-JPG_Roughness.jpg" id="27_ene1s"]
+[ext_resource type="Texture2D" uid="uid://bpt48hsoq7er2" path="res://icon.svg" id="27_t4jc7"]
+[ext_resource type="Script" path="res://Inventory/equip_slot_data.gd" id="28_jv8qw"]
 [ext_resource type="Script" path="res://UnitStuff/StatModifier.gd" id="29_33la7"]
 [ext_resource type="Script" path="res://PlayerStuff/PlayerActions/PlayerActionManager.gd" id="30_3j0v7"]
 [ext_resource type="Script" path="res://PlayerStatMod.gd" id="30_ywxhv"]
@@ -88,49 +82,66 @@ script = ExtResource("18_ub1ry")
 item_data = ExtResource("17_rpo8l")
 quantity = 1
 
-[sub_resource type="Resource" id="Resource_ks4xu"]
-script = ExtResource("18_ub1ry")
-item_data = ExtResource("20_eebsv")
-quantity = 1
+[sub_resource type="Resource" id="Resource_5l62i"]
+script = ExtResource("13_a74p7")
 
-[sub_resource type="Resource" id="Resource_xvxyr"]
+[sub_resource type="Resource" id="Resource_3nm4a"]
+script = ExtResource("15_dmw7u")
+range_type = 2
+area_type = 1
+
+[sub_resource type="Resource" id="Resource_iaa8s"]
 script = ExtResource("14_16eow")
-action_name = "NEW ACTION"
-offensive_point_cost = 0
-defensive_point_cost = 0
-cooldown = 0
-use_weapon_targeting = false
-player_action_effects = Array[Resource("res://PlayerStuff/PlayerActions/PlayerActionEffect.gd")]([])
+action_name = "HEADBUTT"
+offensive_point_cost = 1
+defensive_point_cost = 1
+cooldown = 3
+use_weapon_targeting = true
+targeting = SubResource("Resource_3nm4a")
+player_action_effects = Array[Resource("res://PlayerStuff/PlayerActions/PlayerActionEffect.gd")]([SubResource("Resource_5l62i")])
 combat_action = true
 
-[sub_resource type="Resource" id="Resource_cv867"]
+[sub_resource type="Resource" id="Resource_6kvbt"]
 script = ExtResource("29_33la7")
 add_amount = 5
 multiplier = 0
 
-[sub_resource type="Resource" id="Resource_3f6q2"]
-script = ExtResource("30_ywxhv")
-bravery_mod = SubResource("Resource_cv867")
+[sub_resource type="Resource" id="Resource_ci4t1"]
+script = ExtResource("29_33la7")
+add_amount = 1
+multiplier = 0
 
-[sub_resource type="Resource" id="Resource_pyn8v"]
-script = ExtResource("25_oy7mm")
-two_handed = true
-equip_slot_type = ExtResource("27_8ak8m")
-stat_modifier = SubResource("Resource_3f6q2")
-gain_action = SubResource("Resource_xvxyr")
-item_name = "2Handers"
+[sub_resource type="Resource" id="Resource_ed7lh"]
+script = ExtResource("29_33la7")
+add_amount = 3
+multiplier = 0
+
+[sub_resource type="Resource" id="Resource_kpama"]
+script = ExtResource("30_ywxhv")
+bravery_mod = SubResource("Resource_6kvbt")
+reaction_mod = SubResource("Resource_ed7lh")
+phys_armor_per_turn_mod = SubResource("Resource_ci4t1")
+
+[sub_resource type="Resource" id="Resource_0p86q"]
+script = ExtResource("33_tc6nk")
+stat_modifier = SubResource("Resource_kpama")
+gain_action = SubResource("Resource_iaa8s")
+equip_slot = 0
+is_two_handed = false
+item_name = "Simple Helm"
 description = ""
 stackable = false
-image = ExtResource("27_ij8ng")
+image = ExtResource("27_t4jc7")
 
-[sub_resource type="Resource" id="Resource_psb31"]
+[sub_resource type="Resource" id="Resource_ks4xu"]
 script = ExtResource("18_ub1ry")
-item_data = SubResource("Resource_pyn8v")
+item_data = SubResource("Resource_0p86q")
 quantity = 1
 
 [sub_resource type="Resource" id="Resource_uswu2"]
 script = ExtResource("33_tc6nk")
-equip_slot_type = ExtResource("27_jdpds")
+equip_slot = 2
+is_two_handed = false
 item_name = "OFFHAND"
 description = ""
 stackable = false
@@ -141,38 +152,46 @@ script = ExtResource("18_ub1ry")
 item_data = SubResource("Resource_uswu2")
 quantity = 1
 
+[sub_resource type="Resource" id="Resource_7plu4"]
+script = ExtResource("33_tc6nk")
+equip_slot = 0
+is_two_handed = false
+item_name = ""
+description = ""
+stackable = false
+image = ExtResource("27_ene1s")
+
+[sub_resource type="Resource" id="Resource_adp6h"]
+script = ExtResource("28_jv8qw")
+item_data = SubResource("Resource_7plu4")
+quantity = 1
+
 [sub_resource type="Resource" id="Resource_h0xrx"]
 script = ExtResource("16_rtwg8")
-slot_datas = Array[ExtResource("18_ub1ry")]([SubResource("Resource_noflh"), SubResource("Resource_ks4xu"), SubResource("Resource_psb31"), SubResource("Resource_52pxt"), null, null, null, null, null, null, null])
+slot_datas = Array[ExtResource("18_ub1ry")]([SubResource("Resource_noflh"), SubResource("Resource_ks4xu"), SubResource("Resource_52pxt"), SubResource("Resource_adp6h"), null, null, null, null, null, null])
 
 [sub_resource type="Resource" id="Resource_djn5y"]
 script = ExtResource("19_ogwxi")
-required_equip_type = ExtResource("20_1jn3b")
-slot_datas = Array[ExtResource("18_ub1ry")]([null])
+slot_datas = Array[ExtResource("18_ub1ry")]([])
 
 [sub_resource type="Resource" id="Resource_7ui7q"]
 script = ExtResource("19_ogwxi")
-required_equip_type = ExtResource("24_ru2qn")
 slot_datas = Array[ExtResource("18_ub1ry")]([null])
 
 [sub_resource type="Resource" id="Resource_ex2me"]
 script = ExtResource("19_ogwxi")
-required_equip_type = ExtResource("25_dgqdj")
 slot_datas = Array[ExtResource("18_ub1ry")]([null])
 
 [sub_resource type="Resource" id="Resource_gara6"]
 script = ExtResource("19_ogwxi")
-required_equip_type = ExtResource("26_mu7wx")
 slot_datas = Array[ExtResource("18_ub1ry")]([null])
 
 [sub_resource type="Resource" id="Resource_7skbw"]
 script = ExtResource("19_ogwxi")
-required_equip_type = ExtResource("27_8ak8m")
 slot_datas = Array[ExtResource("18_ub1ry")]([null])
 
 [sub_resource type="Resource" id="Resource_uysf5"]
 script = ExtResource("19_ogwxi")
-required_equip_type = ExtResource("27_jdpds")
 slot_datas = Array[ExtResource("18_ub1ry")]([null])
 
 [sub_resource type="Resource" id="Resource_7nhwe"]
@@ -235,6 +254,30 @@ script = ExtResource("37_8xvld")
 value_name = ""
 base_value = 3
 
+[sub_resource type="Resource" id="Resource_5hovn"]
+script = ExtResource("19_ogwxi")
+slot_datas = Array[ExtResource("18_ub1ry")]([null])
+
+[sub_resource type="Resource" id="Resource_cqr08"]
+script = ExtResource("19_ogwxi")
+slot_datas = Array[ExtResource("18_ub1ry")]([null])
+
+[sub_resource type="Resource" id="Resource_8le26"]
+script = ExtResource("19_ogwxi")
+slot_datas = Array[ExtResource("18_ub1ry")]([null])
+
+[sub_resource type="Resource" id="Resource_i6ghx"]
+script = ExtResource("19_ogwxi")
+slot_datas = Array[ExtResource("18_ub1ry")]([null])
+
+[sub_resource type="Resource" id="Resource_y8jys"]
+script = ExtResource("19_ogwxi")
+slot_datas = Array[ExtResource("18_ub1ry")]([null])
+
+[sub_resource type="Resource" id="Resource_0f78y"]
+script = ExtResource("19_ogwxi")
+slot_datas = Array[ExtResource("18_ub1ry")]([null])
+
 [node name="Game" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -246,6 +289,7 @@ grow_vertical = 2
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="CombatManager" type="PanelContainer" parent="UI" node_paths=PackedStringArray("back_row_holder", "middle_row_holder", "front_row_holder")]
+visible = false
 anchors_preset = -1
 anchor_right = 0.759
 anchor_bottom = 0.85
@@ -452,12 +496,12 @@ visible = false
 [node name="ItemManager" type="Node" parent="."]
 script = ExtResource("10_23yfe")
 
-[node name="Player" type="Node" parent="."]
+[node name="Player" type="Node" parent="." node_paths=PackedStringArray("equip_controller")]
 script = ExtResource("18_x7bm5")
 inventory_data = SubResource("Resource_h0xrx")
 equip_inventory_data = Array[ExtResource("19_ogwxi")]([SubResource("Resource_djn5y"), SubResource("Resource_7ui7q"), SubResource("Resource_ex2me"), SubResource("Resource_gara6"), SubResource("Resource_7skbw"), SubResource("Resource_uysf5")])
+equip_controller = NodePath("PlayerEquipManager")
 test_learn_action = SubResource("Resource_uo68b")
-offhand_type = ExtResource("27_jdpds")
 
 [node name="PlayerActionManager" type="Node" parent="Player"]
 script = ExtResource("30_3j0v7")
@@ -478,6 +522,12 @@ magical_power = SubResource("Resource_mjk8s")
 
 [node name="PlayerEquipManager" type="Node" parent="Player"]
 script = ExtResource("44_05mq3")
+helm_slot_inventory = SubResource("Resource_5hovn")
+chest_slot_inventory = SubResource("Resource_cqr08")
+leg_slot_inventory = SubResource("Resource_8le26")
+feet_slot_inventory = SubResource("Resource_i6ghx")
+weapon_slot_inventory = SubResource("Resource_y8jys")
+offhand_slot_inventory = SubResource("Resource_0f78y")
 
 [connection signal="pressed" from="UI/CombatManager/Control/EndTurnButton" to="UI/CombatManager" method="_on_end_turn_button_pressed"]
 [connection signal="gui_input" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_gui_input"]

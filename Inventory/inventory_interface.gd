@@ -29,8 +29,10 @@ func init_player_inventory():
 		return
 	set_player_inventory_data(player.inventory_data)
 	$"../EquipInventory".init_equip_inventory()
-	for equip_slot in player.equip_inventory_data:
+	for equip_slot in player.equip_controller.get_all_slot_invs():
 		equip_slot.inventory_interact.connect(on_inventory_interact)
+	#for equip_slot in player.equip_inventory_data:
+		#equip_slot.inventory_interact.connect(on_inventory_interact)
 	player.toggle_inventory.connect(toggle_inventory_interface)
 	player.inventory_data.inventory_interact.connect(on_inventory_interact)
 

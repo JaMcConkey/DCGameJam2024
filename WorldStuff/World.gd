@@ -27,6 +27,13 @@ func _ready():
 
 	#player_pawn.entered_new_cell.connect(handle_tile_enter)
 
+func get_eventless_cell() -> Cell:
+	for i in range(cells.size()):
+		if cells[i].cell_event:
+			continue
+		return cells[i]
+	return null
+
 #NOTE: This is emitted everytime a player enters a cell, we'll check for events
 #and disable movement if there is one to resolve
 func handle_tile_enter(cell_entered : Cell):

@@ -26,7 +26,10 @@ func use_slot_data(index : int) -> void:
 		slot_data.quantity -= 1
 		if slot_data.quantity < 1:
 			slot_datas[index] = null
-			
+	if slot_data.item_data is EquipItemData:
+		if PlayerManager.player.equip_controller.equip(slot_data):
+			slot_datas[index] = null
+		
 	PlayerManager.use_slot_data(slot_data)
 	inventory_updated.emit(self)
 

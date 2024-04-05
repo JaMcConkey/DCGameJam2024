@@ -8,9 +8,9 @@ signal toggle_inventory
 @onready var player_action_manager : PlayerActionManager = $PlayerActionManager
 @onready var stats : PlayerStats = $PlayerStats
 
-@export var test_learn_action : PlayerAction
+@export var equip_controller : PlayerEquipController
 
-@export var offhand_type : EquipSlotType
+@export var test_learn_action : PlayerAction
 
 func _ready():
 	PlayerManager.player = self
@@ -20,19 +20,11 @@ func _ready():
 	$"../UI/CharacterUI".init_player_ui()
 	#ADD TO WORLD HERE FOR NOW
 	#var random_cell = randi() % World.instance.cells.size()
-	World.instance.place_player_in_cell(World.instance.cells.pick_random())
+	World.instance.place_player_in_cell(World.instance.get_eventless_cell())
 
 func take_damage(damage : Damage):
 	stats.take_damage(damage)
 	pass
-
-func has_offhand():
-	for check in equip_inventory_data:
-		if check.required_equip_type == offhand_type:
-			for data in check.slot_datas:
-				if data:
-					return true
-	return false
 
 func damage(amount : int) -> void:
 	pass

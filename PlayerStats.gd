@@ -23,30 +23,48 @@ var magic_armor : int
 func init_player_stats():
 	current_health = max_health.value
 	#NOTE: For not connecting here to inventroy, CHANGE LATER
-	for equip_slot in PlayerManager.player.equip_inventory_data:
+	for equip_slot in PlayerManager.player.equip_controller.get_all_slot_invs():
 		equip_slot.inventory_updated.connect(update_equip_stats)
+	#for equip_slot in PlayerManager.player.equip_inventory_data:
+		#equip_slot.inventory_updated.connect(update_equip_stats)
 
 func update_equip_stats(inventory : EquipInventoryData):
 	var brave_mod : int
 	var reaction_mod : int
 	var willpower_mod : int
 	#Going to ignore this and just update player directly
-	for item in PlayerManager.player.equip_inventory_data:
+	remove_modifiers_from_source(inventory)
+	for item in inventory.slot_datas:
 		#REMOVE OLD MODS
-		for equip in item.slot_datas:
-			remove_modifiers_from_source(item)
-			#If the slot is empty, skip it
-			if not equip or not equip.item_data:
-				continue
-			var equip_item : EquipItemData
-			#Just a failsafe
-			if not equip.item_data is EquipItemData:
-				print("For some reason this wasn't equip data - CHECK WHY")
-				continue
-			else:
-				equip_item = equip.item_data
-				#Make the slot the source
-				apply_stat_modifier(equip_item.stat_modifier,item)
+
+		#If the slot is empty, skip it
+		if not item or not item.item_data:
+			continue
+		var equip_item : EquipItemData
+		#Just a failsafe
+		if not item.item_data is EquipItemData:
+			print("For some reason this wasn't equip data - CHECK WHY")
+			continue
+		else:
+			equip_item = item.item_data
+			#Make the slot the source
+			apply_stat_modifier(equip_item.stat_modifier,inventory)
+	#for item in PlayerManager.player.equip_inventory_data:
+		##REMOVE OLD MODS
+		#for equip in item.slot_datas:
+			#remove_modifiers_from_source(item)
+			##If the slot is empty, skip it
+			#if not equip or not equip.item_data:
+				#continue
+			#var equip_item : EquipItemData
+			##Just a failsafe
+			#if not equip.item_data is EquipItemData:
+				#print("For some reason this wasn't equip data - CHECK WHY")
+				#continue
+			#else:
+				#equip_item = equip.item_data
+				##Make the slot the source
+				#apply_stat_modifier(equip_item.stat_modifier,item)
 	PlayerStatsUpdated.emit(self)
 
 func take_damage(damage : Damage) -> void:

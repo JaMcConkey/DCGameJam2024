@@ -56,6 +56,4 @@ func update_action_slots(action_manager : PlayerActionManager):
 		slot.bind_action(action)
 	pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+

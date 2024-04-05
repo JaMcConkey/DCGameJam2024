@@ -12,7 +12,7 @@ func set_slot_data(inventory_slot_data : InventorySlotData) -> void:
 	
 	if inventory_slot_data.quantity > 1:
 		amount.text = inventory_slot_data.quantity
-		amount.show
+		amount.show()
 		#if it's more than 1 we'll show the quantity, if not, hide it
 		pass
 	else:
